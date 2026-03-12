@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Our Fleet – Costa Rica Overlanding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #0D2B1E;
+      --green-mid:    #1B4332;
+      --green-light:  #2D6A4F;
+      --green-accent: #52B788;
+      --amber:        #F4A261;
+      --amber-dark:   #E76F51;
+      --cream:        #F8F4EE;
+      --white:        #FFFFFF;
+      --text-muted:   #6B7A6E;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; background: var(--green-dark); color: var(--white); overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--green-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 1.2rem 5%;
+      background: rgba(13,43,30,0.97); backdrop-filter: blur(12px);
+      box-shadow: 0 2px 30px rgba(0,0,0,0.3);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .nav-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .nav-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--white); line-height: 1.1; }
+    .nav-logo-text span { color: var(--amber); display: block; font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--amber); }
+    .nav-cta { background: linear-gradient(135deg, var(--amber), var(--amber-dark)); color: var(--white) !important; padding: 0.6rem 1.4rem; border-radius: 50px; font-weight: 600 !important; transition: transform 0.2s, box-shadow 0.2s !important; }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(244,162,97,0.4); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 25px; height: 2px; background: white; border-radius: 2px; }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      padding: 10rem 5% 5rem; text-align: center;
+      background: linear-gradient(180deg, var(--green-dark) 0%, rgba(27,67,50,0.5) 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .section-label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green-accent); margin-bottom: 1rem; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; color: var(--white); margin-bottom: 1rem; }
+    .page-title .accent { color: var(--amber); font-style: italic; }
+    .page-subtitle { color: rgba(255,255,255,0.55); font-size: 1.05rem; line-height: 1.8; max-width: 520px; margin: 0 auto; }
+
+    /* ─── URCHIN SECTION ─── */
+    .urchin-section {
+      padding: 6rem 5%;
+      background: var(--green-dark);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .urchin-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem; align-items: start;
+    }
+
+    /* Gallery */
+    .urchin-gallery { position: relative; min-width: 0; }
+    .urchin-gallery-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(82,183,136,0.15); border: 1px solid rgba(82,183,136,0.3);
+      color: var(--green-accent); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.2rem;
+    }
+    .urchin-gallery-label::before { content: ''; width: 6px; height: 6px; background: var(--green-accent); border-radius: 50%; }
+    .main-slideshow {
+      width: 100%; height: 520px;
+      border-radius: 20px; overflow: hidden;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .vehicle-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; }
+    .vehicle-slide.active { opacity: 1; }
+    .vehicle-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 10; background: rgba(0,0,0,0.5); border: none;
+      color: white; width: 44px; height: 44px; border-radius: 50%;
+      font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .slide-arrow:hover { background: rgba(0,0,0,0.8); }
+    .slide-arrow.prev { left: 1rem; }
+    .slide-arrow.next { right: 1rem; }
+    .slide-dots {
+      position: absolute; bottom: 1.2rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; z-index: 10; flex-wrap: wrap; justify-content: center; max-width: 85%;
+    }
+    .slide-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: background 0.2s; }
+    .slide-dot.active { background: white; }
+
+    /* Thumbnail strip */
+    .thumb-strip {
+      display: flex; flex-wrap: nowrap; overflow-x: auto;
+      gap: 8px; margin-top: 10px;
+      scrollbar-width: none;
+    }
+    .thumb-strip::-webkit-scrollbar { display: none; }
+    .thumb {
+      flex: 0 0 calc(20% - 7px); min-width: 60px;
+      height: 72px; border-radius: 10px; overflow: hidden;
+      cursor: pointer; opacity: 0.5; transition: opacity 0.2s, box-shadow 0.2s;
+      border: 2px solid transparent;
+    }
+    .thumb:hover { opacity: 0.8; }
+    .thumb.active { opacity: 1; border-color: var(--amber); box-shadow: 0 0 0 2px rgba(244,162,97,0.3); }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Details */
+    .urchin-details { padding-top: 0.5rem; min-width: 0; }
+    .urchin-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3rem);
+      font-weight: 900; color: var(--white); line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+    .urchin-subtitle { color: rgba(255,255,255,0.45); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .urchin-desc {
+      color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.8;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Specs row */
+    .specs-row {
+      display: flex; gap: 2rem;
+      padding-bottom: 2rem; margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .spec-item { text-align: center; }
+    .spec-val { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--amber); line-height: 1; }
+    .spec-label { font-size: 0.72rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
+
+    /* Features */
+    .features-title { font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1rem; }
+    .features-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.7rem; margin-bottom: 2rem;
+    }
+    .feature-item {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 0.7rem 1rem;
+      color: rgba(255,255,255,0.75); font-size: 0.85rem;
+    }
+    .feature-item-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .book-btn {
+      display: block; width: 100%; text-align: center;
+      background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+      color: white; padding: 1.1rem; border-radius: 14px;
+      font-weight: 700; font-size: 1rem; text-decoration: none; letter-spacing: 0.5px;
+      transition: all 0.25s; box-shadow: 0 8px 30px rgba(244,162,97,0.3);
+    }
+    .book-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(244,162,97,0.45); }
+    .book-note { text-align: center; color: rgba(255,255,255,0.3); font-size: 0.8rem; margin-top: 0.8rem; }
+
+    /* ─── BARNACLE SECTION ─── */
+    .barnacle-section {
+      padding: 6rem 5%;
+      background: rgba(0,0,0,0.15);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .barnacle-section .urchin-inner { direction: ltr; }
+
+    /* ─── COMING SOON SECTION ─── */
+    .coming-section {
+      padding: 6rem 5%;
+      background: rgba(0,0,0,0.2);
+    }
+    .coming-header { max-width: 1200px; margin: 0 auto 3rem; }
+    .coming-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: white; margin-top: 0.5rem; }
+    .coming-header p { color: rgba(255,255,255,0.4); font-size: 0.95rem; margin-top: 0.5rem; }
+    .coming-cards { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; }
+
+    /* Horizontal coming soon card */
+    .coming-card {
+      display: grid; grid-template-columns: 280px 1fr;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .coming-card:hover { border-color: rgba(244,162,97,0.2); }
+    .coming-photo {
+      height: 200px;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px,
+        transparent 2px, transparent 14px
+      );
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .coming-photo::before { content: '🚙'; font-size: 4rem; opacity: 0.08; }
+    .coming-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: rgba(244,162,97,0.85); color: white;
+      padding: 0.3rem 0.8rem; border-radius: 50px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .coming-info { padding: 1.8rem 2rem; display: flex; flex-direction: column; justify-content: center; }
+    .coming-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 700;
+      color: rgba(255,255,255,0.3); margin-bottom: 0.3rem;
+    }
+    .coming-type { color: rgba(255,255,255,0.2); font-size: 0.82rem; margin-bottom: 1rem; }
+    .coming-desc { color: rgba(255,255,255,0.3); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; max-width: 500px; }
+    .coming-btn {
+      display: inline-block;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.25); padding: 0.75rem 2rem; border-radius: 10px;
+      font-weight: 700; font-size: 0.88rem; letter-spacing: 1.5px; text-transform: uppercase;
+      width: fit-content; cursor: default;
+    }
+
+    /* ─── WHATSAPP ─── */
+    .whatsapp-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      width: 60px; height: 60px; background: #25D366; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+      text-decoration: none; animation: bounce 3s infinite; transition: transform 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); animation: none; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(13,43,30,0.98); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: white; text-decoration: none; font-size: 1.4rem; font-weight: 600; }
+    .mobile-menu a:hover { color: var(--amber); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 2rem; color: white; cursor: pointer; background: none; border: none; }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--green-dark); color: rgba(255,255,255,0.55); padding: 4rem 5% 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--amber); }
+    .footer-bottom { max-width: 1200px; margin: 2rem auto 0; display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .urchin-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .main-slideshow { height: 420px; }
+      .coming-card { grid-template-columns: 1fr; }
+      .coming-photo { height: 180px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .page-hero { padding: 8rem 5% 4rem; }
+      .urchin-section, .barnacle-section, .coming-section { padding: 4rem 5%; }
+      .urchin-inner { grid-template-columns: 1fr; }
+      .specs-row { gap: 1rem; flex-wrap: wrap; }
+      .spec-item { flex: 1 1 auto; min-width: 60px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .thumb-strip { gap: 6px; }
+      .thumb { flex: 0 0 calc(25% - 5px); height: 60px; }
+      .urchin-title { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+      .book-btn { padding: 1rem; font-size: 0.95rem; }
+    }
+    @media (max-width: 480px) {
+      .main-slideshow { height: 72vw; }
+      .thumb { flex: 0 0 calc(33% - 5px); height: 55px; }
+      .coming-info { padding: 1.2rem; }
+      .coming-photo { height: 130px; }
+      .specs-row { justify-content: space-around; }
+      .urchin-inner { gap: 2rem; }
+      .urchin-gallery-label { font-size: 0.65rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="trucks.html" onclick="closeMobile()" style="color:var(--amber)">Trucks</a>
+  <a href="destinations.html" onclick="closeMobile()">Destinations</a>
+  <a href="howitworks.html" onclick="closeMobile()">How It Works</a>
+  <a href="contact.html" onclick="closeMobile()">Contact</a>
+  <a href="https://wa.me/50684980851" target="_blank" style="color:var(--amber)">Book via WhatsApp</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><img src="https://img1.wsimg.com/isteam/ip/197458aa-0c8d-408c-9705-637913c517ca/Social%20no%20Shadow.png/:/rs=w:128,h:128,cg:true,m/cr=w:128,h:128/qt=q:95" alt="Logo" /></div>
+    <div class="nav-logo-text">Costa Rica Overlanding<span>4x4 Camper Rentals</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="trucks.html" class="active">Trucks</a></li>
+    <li><a href="destinations.html">Destinations</a></li>
+    <li><a href="howitworks.html">How It Works</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" onclick="openMobile()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <span class="section-label">Our Fleet</span>
+  <h1 class="page-title">Pick Your <span class="accent">Ride</span></h1>
+  <p class="page-subtitle">Custom-built 4×4 campers built for Costa Rica's wildest roads. Two ready now, one more coming soon.</p>
+</div>
+
+<!-- THE URCHIN -->
+<section class="urchin-section">
+  <div class="urchin-inner">
+
+    <!-- Gallery -->
+    <div class="urchin-gallery">
+      <div class="urchin-gallery-label">Available Now</div>
+      <div class="main-slideshow" id="truckSlideshow">
+        <div class="vehicle-slide active"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/0e40c05c-5dab-44d1-8413-2c69523b493d/WhatsApp+Image+2026-03-11+at+10.28.02+AM+%283%29.jpeg?content-type=image%2Fjpeg" alt="The Urchin" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/69959991-f908-460d-a146-a76762f79ed2/WhatsApp+Image+2026-03-11+at+10.28.00+AM.jpeg?content-type=image%2Fjpeg" alt="Camper interior" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/9c654898-7b26-40ea-a7e7-01a9d8e7b684/WhatsApp+Image+2026-03-11+at+10.28.16+AM+%282%29.jpeg?content-type=image%2Fjpeg" alt="Camper on the road" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/5bb61499-2748-47d3-9d32-37da5ba31ca8/WhatsApp+Image+2026-03-11+at+10.28.06+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="Camper adventure" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/23498fd5-a88a-4a3b-8f8f-70daf3e19499/WhatsApp+Image+2026-03-11+at+10.28.16+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/4e57841d-0698-4e0b-85d5-15d968d31649/WhatsApp+Image+2026-03-11+at+10.28.15+AM.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/6297cb98-f68c-4a24-98c6-3075b3413f03/WhatsApp+Image+2026-03-11+at+10.28.06+AM+%284%29.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/1f2eeada-a80c-43d2-894f-1738e1e36471/WhatsApp+Image+2026-03-11+at+10.28.06+AM.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/38d3dd7b-be03-4ee8-bd9f-4541d1f7272d/WhatsApp+Image+2026-03-11+at+10.28.06+AM+%287%29.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/662efb5e-a08a-4d3f-9aa1-f5af6411bd7d/WhatsApp+Image+2026-03-11+at+10.28.01+AM+%283%29.jpeg?content-type=image%2Fjpeg" alt="The Urchin" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/1ecbe656-30b0-4965-a3fa-aec22f6b1739/WhatsApp+Image+2026-03-11+at+10.28.01+AM.jpeg?content-type=image%2Fjpeg" alt="The Urchin" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/43172af3-e96f-4d17-a64e-04fe8e7442ec/WhatsApp+Image+2026-03-11+at+10.28.10+AM.jpeg?content-type=image%2Fjpeg" alt="The Urchin" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/a453bbf3-28f4-4f74-9441-054dedbb34a9/WhatsApp+Image+2026-03-11+at+10.28.06+AM+%286%29.jpeg?content-type=image%2Fjpeg" alt="The Urchin" /></div>
+        <button class="slide-arrow prev" aria-label="Previous">&#8249;</button>
+        <button class="slide-arrow next" aria-label="Next">&#8250;</button>
+        <div class="slide-dots" id="slideDots"></div>
+      </div>
+      <!-- Thumbnail strip -->
+      <div class="thumb-strip" id="thumbStrip">
+        <div class="thumb active" data-slide="0"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/0e40c05c-5dab-44d1-8413-2c69523b493d/WhatsApp+Image+2026-03-11+at+10.28.02+AM+%283%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="1"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/69959991-f908-460d-a146-a76762f79ed2/WhatsApp+Image+2026-03-11+at+10.28.00+AM.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="2"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/9c654898-7b26-40ea-a7e7-01a9d8e7b684/WhatsApp+Image+2026-03-11+at+10.28.16+AM+%282%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="3"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/5bb61499-2748-47d3-9d32-37da5ba31ca8/WhatsApp+Image+2026-03-11+at+10.28.06+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="4"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/23498fd5-a88a-4a3b-8f8f-70daf3e19499/WhatsApp+Image+2026-03-11+at+10.28.16+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="9"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/662efb5e-a08a-4d3f-9aa1-f5af6411bd7d/WhatsApp+Image+2026-03-11+at+10.28.01+AM+%283%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="10"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/1ecbe656-30b0-4965-a3fa-aec22f6b1739/WhatsApp+Image+2026-03-11+at+10.28.01+AM.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="11"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/43172af3-e96f-4d17-a64e-04fe8e7442ec/WhatsApp+Image+2026-03-11+at+10.28.10+AM.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="12"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/a453bbf3-28f4-4f74-9441-054dedbb34a9/WhatsApp+Image+2026-03-11+at+10.28.06+AM+%286%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div class="urchin-details">
+      <div class="urchin-title">The Urchin</div>
+      <div class="urchin-subtitle">Custom-Built 4×4 Camper Truck</div>
+      <p class="urchin-desc">Built for the road less traveled. The Urchin is a fully custom 4×4 camper packed with everything you need to explore Costa Rica on your own schedule — from cloud forests to remote Pacific beaches.</p>
+
+      <div class="specs-row">
+        <div class="spec-item">
+          <div class="spec-val">3</div>
+          <div class="spec-label">Guests</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-val">4×4</div>
+          <div class="spec-label">All-Terrain</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-val">5</div>
+          <div class="spec-label">Night Min.</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-val">∞</div>
+          <div class="spec-label">Adventure</div>
+        </div>
+      </div>
+
+      <div class="features-title">What's Included</div>
+      <div class="features-grid">
+        <div class="feature-item"><span class="feature-item-icon">❄️</span>Air Conditioning</div>
+        <div class="feature-item"><span class="feature-item-icon">🍳</span>Full Kitchen</div>
+        <div class="feature-item"><span class="feature-item-icon">🌬️</span>Roof Fan</div>
+        <div class="feature-item"><span class="feature-item-icon">🚿</span>Outdoor Shower</div>
+        <div class="feature-item"><span class="feature-item-icon">🛏️</span>Queen + Single Beds</div>
+        <div class="feature-item"><span class="feature-item-icon">⚡</span>Generator + Solar</div>
+        <div class="feature-item"><span class="feature-item-icon">🪟</span>Screened Windows</div>
+        <div class="feature-item"><span class="feature-item-icon">🪑</span>Camping Gear</div>
+        <div class="feature-item"><span class="feature-item-icon">🚗</span>Automatic Transmission</div>
+        <div class="feature-item"><span class="feature-item-icon">🚽</span>Portable Toilet</div>
+      </div>
+
+      <a href="contact.html" class="book-btn">Book The Urchin →</a>
+      <p class="book-note">Have questions? <a href="https://wa.me/50684980851" target="_blank" style="color:var(--amber);text-decoration:none;">Chat on WhatsApp</a></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- THE BARNACLE -->
+<section class="barnacle-section">
+  <div class="urchin-inner">
+
+    <!-- Gallery -->
+    <div class="urchin-gallery">
+      <div class="urchin-gallery-label">Available Now</div>
+      <div class="main-slideshow" id="barnacleSlideshow">
+        <div class="vehicle-slide active"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/b7812003-b510-4bb7-b1fc-c6856f94e33c/WhatsApp+Image+2026-03-12+at+8.42.48+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/e610008b-f4a3-4487-9917-d8542390520b/WhatsApp+Image+2026-03-12+at+8.42.48+AM+%282%29.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/107feff4-f791-4fd5-97ab-fddef26245fc/WhatsApp+Image+2026-03-12+at+8.42.48+AM.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/5b45d2d4-c9fd-4237-a2ab-f31ff427033e/WhatsApp+Image+2026-03-12+at+8.42.49+AM.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/67c87260-f1f9-4518-89ef-caf1cfdd066f/WhatsApp+Image+2026-03-11+at+11.10.42+AM.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/a689d744-0621-4a25-99eb-33f6e280f2c1/WhatsApp+Image+2026-03-11+at+11.10.44+AM+%285%29.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+        <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/aa2ac10e-1956-4077-a8c1-a7f6fc126d0b/WhatsApp+Image+2026-03-11+at+11.10.44+AM+%282%29.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+        <button class="slide-arrow prev" aria-label="Previous">&#8249;</button>
+        <button class="slide-arrow next" aria-label="Next">&#8250;</button>
+        <div class="slide-dots" id="barnacleSlideDotsId"></div>
+      </div>
+      <!-- Thumbnail strip -->
+      <div class="thumb-strip" id="barnacleThumbStrip">
+        <div class="thumb active" data-slide="0"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/b7812003-b510-4bb7-b1fc-c6856f94e33c/WhatsApp+Image+2026-03-12+at+8.42.48+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="1"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/e610008b-f4a3-4487-9917-d8542390520b/WhatsApp+Image+2026-03-12+at+8.42.48+AM+%282%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="2"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/107feff4-f791-4fd5-97ab-fddef26245fc/WhatsApp+Image+2026-03-12+at+8.42.48+AM.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="3"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/5b45d2d4-c9fd-4237-a2ab-f31ff427033e/WhatsApp+Image+2026-03-12+at+8.42.49+AM.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="4"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/67c87260-f1f9-4518-89ef-caf1cfdd066f/WhatsApp+Image+2026-03-11+at+11.10.42+AM.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="5"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/a689d744-0621-4a25-99eb-33f6e280f2c1/WhatsApp+Image+2026-03-11+at+11.10.44+AM+%285%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+        <div class="thumb" data-slide="6"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/aa2ac10e-1956-4077-a8c1-a7f6fc126d0b/WhatsApp+Image+2026-03-11+at+11.10.44+AM+%282%29.jpeg?content-type=image%2Fjpeg" alt="" /></div>
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div class="urchin-details">
+      <div class="urchin-title">The Barnacle</div>
+      <div class="urchin-subtitle">Custom-Built 4×4 Camper Truck</div>
+      <p class="urchin-desc">Ready to cling to every corner of Costa Rica. The Barnacle is a fully custom 4×4 camper built to take you deep into the wild — rugged enough for the toughest roads, comfortable enough to call home.</p>
+
+      <div class="specs-row">
+        <div class="spec-item">
+          <div class="spec-val">3</div>
+          <div class="spec-label">Guests</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-val">4×4</div>
+          <div class="spec-label">All-Terrain</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-val">5</div>
+          <div class="spec-label">Night Min.</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-val">∞</div>
+          <div class="spec-label">Adventure</div>
+        </div>
+      </div>
+
+      <div class="features-title">What's Included</div>
+      <div class="features-grid">
+        <div class="feature-item"><span class="feature-item-icon">❄️</span>Air Conditioning</div>
+        <div class="feature-item"><span class="feature-item-icon">🍳</span>Full Kitchen</div>
+        <div class="feature-item"><span class="feature-item-icon">🌬️</span>Roof Fan</div>
+        <div class="feature-item"><span class="feature-item-icon">🚿</span>Outdoor Shower</div>
+        <div class="feature-item"><span class="feature-item-icon">🛏️</span>Queen + Single Beds</div>
+        <div class="feature-item"><span class="feature-item-icon">⚡</span>Generator + Solar</div>
+        <div class="feature-item"><span class="feature-item-icon">🪟</span>Screened Windows</div>
+        <div class="feature-item"><span class="feature-item-icon">🪑</span>Camping Gear</div>
+        <div class="feature-item"><span class="feature-item-icon">🚗</span>Automatic Transmission</div>
+        <div class="feature-item"><span class="feature-item-icon">🚽</span>Portable Toilet</div>
+      </div>
+
+      <a href="contact.html" class="book-btn">Book The Barnacle →</a>
+      <p class="book-note">Have questions? <a href="https://wa.me/50684980851" target="_blank" style="color:var(--amber);text-decoration:none;">Chat on WhatsApp</a></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMING SOON -->
+<section class="coming-section">
+  <div class="coming-header">
+    <span class="section-label">Expanding the Fleet</span>
+    <h2>More Rigs <em style="color:var(--amber);font-style:italic;">Coming Soon</em></h2>
+    <p>One more custom build is currently in the works. Check back soon.</p>
+  </div>
+  <div class="coming-cards">
+
+    <div class="coming-card">
+      <div class="coming-photo">
+        <span class="coming-badge">Coming Soon</span>
+      </div>
+      <div class="coming-info">
+        <div class="coming-name">Truck #3</div>
+        <div class="coming-type">Custom-Built 4×4 Camper Truck</div>
+        <p class="coming-desc">Another adventure machine being built from the ground up. Stay tuned for specs and availability.</p>
+        <div class="coming-btn">Coming Soon</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:40px;height:40px;border-radius:10px;overflow:hidden;"><img src="https://img1.wsimg.com/isteam/ip/197458aa-0c8d-408c-9705-637913c517ca/Social%20no%20Shadow.png/:/rs=w:128,h:128,cg:true,m/cr=w:128,h:128/qt=q:95" alt="Logo" style="width:100%;height:100%;object-fit:contain;" /></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;color:white;font-size:1rem;line-height:1.1;">
+          Costa Rica Overlanding<br>
+          <span style="font-size:0.65rem;color:var(--amber);letter-spacing:2px;font-weight:600;">4X4 CAMPER RENTALS</span>
+        </div>
+      </div>
+      <p>Your home on wheels for exploring the most beautiful country on Earth — on your terms, at your pace.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="trucks.html">The Trucks</a></li>
+        <li><a href="howitworks.html">How It Works</a></li>
+        <li><a href="destinations.html">Destinations</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+50684980851">(506) 8498-0851</a></li>
+        <li><a href="mailto:costaricaoverlanding@gmail.com">Email Us</a></li>
+        <li><a href="https://wa.me/50684980851">WhatsApp</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/costaricaoverlanding" target="_blank">Instagram</a></li>
+        <li><a href="https://www.facebook.com/102731607798887" target="_blank">Facebook</a></li>
+        <li><a href="https://www.youtube.com/@costaricaoverlanding" target="_blank">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Costa Rica Overlanding. All rights reserved.</span>
+    <span>Calle Hermosa Garabito, Puntarenas, Costa Rica</span>
+  </div>
+</footer>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/50684980851" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  function openMobile() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  function initSlideshow(slideshowId, thumbStripId) {
+    const wrap = document.getElementById(slideshowId);
+    if (!wrap) return;
+    const slides = wrap.querySelectorAll('.vehicle-slide');
+    const dots = wrap.querySelector('.slide-dots');
+    const thumbStrip = thumbStripId ? document.getElementById(thumbStripId) : null;
+    const thumbs = thumbStrip ? thumbStrip.querySelectorAll('.thumb') : [];
+    let cur = 0;
+
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'slide-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => go(i));
+      dots.appendChild(d);
+    });
+
+    thumbs.forEach(t => {
+      t.addEventListener('click', () => go(parseInt(t.dataset.slide)));
+    });
+
+    function go(n) {
+      slides[cur].classList.remove('active');
+      dots.children[cur].classList.remove('active');
+      if (cur < thumbs.length) thumbs[cur].classList.remove('active');
+      cur = (n + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots.children[cur].classList.add('active');
+      if (cur < thumbs.length) thumbs[cur].classList.add('active');
+    }
+
+    wrap.querySelector('.prev').addEventListener('click', () => go(cur - 1));
+    wrap.querySelector('.next').addEventListener('click', () => go(cur + 1));
+  }
+
+  initSlideshow('truckSlideshow', 'thumbStrip');
+  initSlideshow('barnacleSlideshow', 'barnacleThumbStrip');
+</script>
+</body>
+</html>

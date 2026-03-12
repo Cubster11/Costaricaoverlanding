@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Costa Rica Overlanding – Explore On Your Terms</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #0D2B1E;
+      --green-mid:    #1B4332;
+      --green-light:  #2D6A4F;
+      --green-accent: #52B788;
+      --amber:        #F4A261;
+      --amber-dark:   #E76F51;
+      --cream:        #F8F4EE;
+      --white:        #FFFFFF;
+      --text-dark:    #0D1B12;
+      --text-muted:   #6B7A6E;
+      --shadow:       0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--green-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 1.2rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(13,43,30,0.97);
+      backdrop-filter: blur(12px);
+      padding: 0.8rem 5%;
+      box-shadow: 0 2px 30px rgba(0,0,0,0.3);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .nav-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 1.1rem;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .nav-logo-text span { color: var(--amber); display: block; font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+      color: var(--white) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 600 !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(244,162,97,0.4); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 25px; height: 2px; background: white; border-radius: 2px; transition: all 0.3s; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      height: 100vh; min-height: 700px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://img1.wsimg.com/isteam/ip/197458aa-0c8d-408c-9705-637913c517ca/347f692b-2162-45d8-acaa-db2e4524ec1b.JPG/:/rs=w:100%25') center/cover no-repeat;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(13,43,30,0.55) 0%,
+        rgba(13,43,30,0.3) 40%,
+        rgba(13,43,30,0.75) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 0 1.5rem;
+      max-width: 900px;
+      animation: fadeUp 1s ease both;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(244,162,97,0.2);
+      border: 1px solid rgba(244,162,97,0.5);
+      color: var(--amber);
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 0.45rem 1.2rem; border-radius: 50px;
+      margin-bottom: 1.8rem;
+      backdrop-filter: blur(6px);
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--amber); border-radius: 50%; animation: pulse 2s infinite; }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900; line-height: 1.05;
+      color: var(--white);
+      text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title .highlight { color: var(--amber); font-style: italic; }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(255,255,255,0.88);
+      line-height: 1.7; font-weight: 300;
+      max-width: 600px; margin: 0 auto 2.5rem;
+    }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+      color: var(--white); text-decoration: none;
+      padding: 1rem 2.2rem; border-radius: 50px;
+      font-weight: 700; font-size: 1rem; letter-spacing: 0.5px;
+      transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 8px 30px rgba(244,162,97,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(244,162,97,0.5); }
+    .btn-secondary {
+      border: 2px solid rgba(255,255,255,0.7);
+      color: var(--white); text-decoration: none;
+      padding: 1rem 2.2rem; border-radius: 50px;
+      font-weight: 600; font-size: 1rem;
+      transition: all 0.25s;
+      backdrop-filter: blur(4px);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: white; }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.6); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+      animation: scrollAnim 2s infinite;
+    }
+    .hero-stats {
+      position: absolute; bottom: 3rem; right: 5%;
+      z-index: 2; display: flex; gap: 2rem;
+    }
+    .hero-stat {
+      text-align: center;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 1rem 1.5rem; border-radius: 16px;
+    }
+    .hero-stat-num { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--amber); line-height: 1; }
+    .hero-stat-label { color: rgba(255,255,255,0.7); font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 6rem 5%; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--green-accent);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; line-height: 1.2;
+      color: var(--green-dark);
+    }
+    .section-title .accent { color: var(--amber-dark); font-style: italic; }
+    .section-subtitle {
+      color: var(--text-muted); font-size: 1.05rem; line-height: 1.8;
+      max-width: 560px; margin-top: 1rem;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--white); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center; max-width: 1200px; margin: 0 auto;
+    }
+    .about-images {
+      position: relative; height: 520px;
+    }
+    .about-img-main {
+      position: absolute; top: 0; left: 0;
+      width: 75%; height: 80%;
+      border-radius: 20px; overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .about-img-main img { width: 100%; height: 100%; object-fit: cover; }
+    .about-img-small {
+      position: absolute; bottom: 0; right: 0;
+      width: 55%; height: 50%;
+      border-radius: 20px; overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 4px solid var(--cream);
+    }
+    .about-img-small img { width: 100%; height: 100%; object-fit: cover; }
+    .about-badge-float {
+      position: absolute; top: 45%; left: 58%;
+      background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+      color: white; font-weight: 700; font-size: 0.85rem;
+      padding: 1rem 1.3rem; border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(231,111,81,0.4);
+      text-align: center; line-height: 1.3; z-index: 2;
+    }
+    .about-badge-float strong { display: block; font-size: 1.6rem; font-family: 'Montserrat', sans-serif; }
+    .about-content { padding: 1rem 0; }
+    .about-features {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-top: 2rem;
+    }
+    .about-feature {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 1rem; border-radius: 12px;
+      background: var(--cream); transition: transform 0.2s;
+    }
+    .about-feature:hover { transform: translateY(-2px); }
+    .about-feature-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .about-feature-text h4 { font-size: 0.9rem; font-weight: 600; color: var(--green-dark); }
+    .about-feature-text p { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ─── FLEET / VEHICLE ─── */
+    #vehicle { background: var(--green-dark); }
+    .fleet-section-header { text-align: center; margin-bottom: 4rem; }
+    .fleet-section-header .section-title { color: var(--white); }
+    .fleet-section-header .section-subtitle { color: rgba(255,255,255,0.6); margin: 1rem auto 0; }
+    .trucks-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2rem; max-width: 1200px; margin: 0 auto;
+      align-items: start;
+    }
+    .truck-card {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .truck-card.available { border-color: rgba(82,183,136,0.4); }
+    .truck-card:hover { transform: translateY(-6px); box-shadow: 0 30px 80px rgba(0,0,0,0.4); }
+    .truck-photo-wrap { position: relative; height: 260px; overflow: hidden; }
+    .truck-status-badge {
+      position: absolute; top: 1rem; left: 1rem; z-index: 5;
+      padding: 0.35rem 0.9rem; border-radius: 50px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .badge-available { background: var(--green-accent); color: white; }
+    .badge-coming { background: rgba(244,162,97,0.85); color: white; }
+    .vehicle-slideshow { width: 100%; height: 100%; position: relative; overflow: hidden; }
+    .vehicle-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; }
+    .vehicle-slide.active { opacity: 1; }
+    .vehicle-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .slide-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 10; background: rgba(0,0,0,0.45); border: none;
+      color: white; width: 40px; height: 40px; border-radius: 50%;
+      font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .slide-arrow:hover { background: rgba(0,0,0,0.75); }
+    .slide-arrow.prev { left: 0.75rem; }
+    .slide-arrow.next { right: 0.75rem; }
+    .slide-dots {
+      position: absolute; bottom: 0.9rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 5px; z-index: 10; flex-wrap: wrap; justify-content: center; max-width: 85%;
+    }
+    .slide-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: background 0.2s; }
+    .slide-dot.active { background: white; }
+    .coming-soon-photo {
+      height: 260px;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
+      display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .coming-soon-photo::before { content: '🚙'; font-size: 4rem; opacity: 0.1; }
+    .coming-soon-label {
+      position: absolute; font-family: 'Montserrat', sans-serif; font-weight: 800;
+      font-size: 1rem; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.18);
+    }
+    .truck-info { padding: 1.5rem; }
+    .truck-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.2rem; }
+    .truck-type { color: rgba(255,255,255,0.45); font-size: 0.82rem; margin-bottom: 1.2rem; }
+    .truck-specs { display: flex; gap: 1.5rem; padding-bottom: 1.2rem; margin-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .truck-spec { text-align: center; }
+    .truck-spec-val { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--amber); }
+    .truck-spec-label { font-size: 0.7rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; }
+    .truck-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .truck-feature { display: flex; align-items: center; gap: 7px; color: rgba(255,255,255,0.7); font-size: 0.82rem; }
+    .truck-feature::before { content: '✓'; color: var(--green-accent); font-weight: 700; flex-shrink: 0; }
+    .truck-cta {
+      display: block; width: 100%; text-align: center;
+      background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+      color: white; padding: 0.9rem; border-radius: 12px;
+      font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.25s;
+    }
+    .truck-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(244,162,97,0.4); }
+    .truck-cta-disabled {
+      display: block; width: 100%; text-align: center;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.3); padding: 0.9rem; border-radius: 12px;
+      font-weight: 700; font-size: 0.95rem; letter-spacing: 1px; text-transform: uppercase; cursor: default;
+    }
+    .truck-card.coming .truck-name { color: rgba(255,255,255,0.35); }
+    .truck-card.coming .truck-type { color: rgba(255,255,255,0.2); }
+    .truck-card.coming .truck-spec-val { color: rgba(244,162,97,0.3); }
+    .truck-card.coming .truck-spec-label { color: rgba(255,255,255,0.2); }
+    .truck-card.coming .truck-specs { border-bottom-color: rgba(255,255,255,0.04); }
+
+    /* ─── HOW IT WORKS ─── */
+    #how { background: var(--cream); }
+    .how-header { text-align: center; margin-bottom: 4rem; }
+    .how-header .section-subtitle { margin: 1rem auto 0; text-align: center; }
+    .steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2rem; max-width: 1100px; margin: 0 auto;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute; top: 38px; left: 12.5%; right: 12.5%;
+      height: 2px;
+      background: linear-gradient(to right, var(--green-accent), var(--amber));
+      z-index: 0;
+    }
+    .step { text-align: center; position: relative; z-index: 1; }
+    .step-num {
+      width: 76px; height: 76px; border-radius: 50%;
+      background: var(--white); border: 3px solid var(--green-accent);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.6rem;
+      box-shadow: 0 8px 30px rgba(82,183,136,0.2);
+      transition: all 0.3s;
+    }
+    .step:hover .step-num {
+      background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+      border-color: transparent; transform: scale(1.1);
+      box-shadow: 0 15px 40px rgba(45,106,79,0.35);
+    }
+    .step h3 { font-size: 1.05rem; font-weight: 700; color: var(--green-dark); margin-bottom: 0.5rem; }
+    .step p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+
+    /* ─── DESTINATIONS ─── */
+    #destinations { background: var(--white); }
+    .dest-header { margin-bottom: 3rem; }
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 280px 280px;
+      gap: 1.2rem; max-width: 1200px; margin: 0 auto;
+    }
+    .dest-card {
+      border-radius: 20px; overflow: hidden;
+      position: relative; cursor: pointer;
+    }
+    .dest-card:first-child { grid-row: span 2; }
+    .dest-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .dest-card:hover img { transform: scale(1.07); }
+    .dest-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,43,30,0.85) 0%, rgba(13,43,30,0.1) 60%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.8rem;
+      transition: background 0.3s;
+    }
+    .dest-card:hover .dest-overlay { background: linear-gradient(to top, rgba(13,43,30,0.9) 0%, rgba(13,43,30,0.2) 60%); }
+    .dest-tag {
+      display: inline-block;
+      background: rgba(244,162,97,0.25); border: 1px solid rgba(244,162,97,0.5);
+      color: var(--amber); font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.3rem 0.8rem; border-radius: 50px; margin-bottom: 0.5rem;
+      width: fit-content;
+    }
+    .dest-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: white; }
+    .dest-desc { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 0.3rem; }
+
+    /* ─── EXPERIENCE ─── */
+    #experience {
+      background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+      text-align: center;
+    }
+    .experience-inner { max-width: 900px; margin: 0 auto; }
+    .experience-inner .section-label { color: var(--green-accent); }
+    .experience-inner .section-title { color: var(--white); margin-bottom: 1.5rem; }
+    .experience-inner .section-subtitle { color: rgba(255,255,255,0.65); margin: 0 auto 3rem; text-align: center; }
+    .exp-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .exp-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px; padding: 2rem;
+      text-align: center; transition: all 0.3s;
+    }
+    .exp-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-5px); }
+    .exp-card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .exp-card h3 { color: var(--white); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .exp-card p { color: rgba(255,255,255,0.55); font-size: 0.9rem; line-height: 1.6; }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials { background: var(--cream); }
+    .testi-header { text-align: center; margin-bottom: 3.5rem; }
+    .testi-carousel-wrap { max-width: 1100px; margin: 0 auto; position: relative; }
+    .testi-track-outer { overflow: hidden; }
+    .testi-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .testi-card {
+      flex: 0 0 calc(33.333% - 1rem);
+      margin-right: 1.5rem;
+      background: var(--white); border-radius: 20px;
+      padding: 2rem; box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .testi-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.12); }
+    .testi-carousel-wrap { position: relative; }
+    .testi-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 42px; height: 42px; border-radius: 50%;
+      border: none; background: white;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+      cursor: pointer; font-size: 1rem; color: var(--green-dark);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; z-index: 2;
+    }
+    .testi-btn:hover { background: var(--green-dark); color: white; box-shadow: 0 4px 20px rgba(45,106,79,0.3); }
+    #testiPrev { left: -20px; }
+    #testiNext { right: -20px; }
+    .testi-carousel-controls { display: flex; justify-content: center; margin-top: 2rem; }
+    .testi-dots { display: flex; gap: 8px; align-items: center; }
+    .testi-dot {
+      width: 24px; height: 4px; border-radius: 2px;
+      background: rgba(45,106,79,0.2); border: none; cursor: pointer; padding: 0;
+      transition: background 0.3s, width 0.3s;
+    }
+    .testi-dot.active { background: var(--green-dark); width: 40px; }
+    .testi-stars { color: var(--amber); font-size: 1rem; letter-spacing: 2px; margin-bottom: 1rem; }
+    .testi-text { color: var(--text-dark); font-size: 0.95rem; line-height: 1.8; font-style: italic; margin-bottom: 1.5rem; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green-mid), var(--green-accent));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 1rem;
+    }
+    .testi-name { font-weight: 700; font-size: 0.95rem; color: var(--green-dark); }
+    .testi-location { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--white); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; max-width: 1100px; margin: 0 auto;
+      align-items: start;
+    }
+    .contact-info { padding-top: 0.5rem; }
+    .contact-info .section-subtitle { margin-bottom: 2.5rem; }
+    .contact-items { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .contact-item-icon {
+      width: 50px; height: 50px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .contact-item-text h4 { font-weight: 700; font-size: 0.9rem; color: var(--green-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+    .contact-item-text a, .contact-item-text p { color: var(--text-muted); font-size: 0.95rem; text-decoration: none; transition: color 0.2s; }
+    .contact-item-text a:hover { color: var(--amber-dark); }
+    .social-links { display: flex; gap: 1rem; margin-top: 2rem; }
+    .social-link {
+      width: 48px; height: 48px;
+      border-radius: 12px; border: 2px solid #e8e8e8;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; text-decoration: none;
+      transition: all 0.25s;
+    }
+    .social-link { color: #555; }
+    .social-link:hover { background: var(--green-dark); border-color: var(--green-dark); transform: translateY(-3px); color: white; }
+    .contact-form {
+      background: var(--cream); border-radius: 24px;
+      padding: 2.5rem;
+    }
+    .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--green-dark); margin-bottom: 0.5rem; }
+    .contact-form p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
+    .form-group label { font-size: 0.82rem; font-weight: 600; color: var(--green-dark); letter-spacing: 0.5px; }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.85rem 1rem; border-radius: 12px;
+      border: 2px solid #e0e0e0; background: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--text-dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--green-accent); box-shadow: 0 0 0 4px rgba(82,183,136,0.15);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+      color: white; border: none; padding: 1rem; border-radius: 12px;
+      font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.5px;
+      transition: all 0.25s; font-family: 'Inter', sans-serif;
+    }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(45,106,79,0.35); }
+
+    /* ─── WHATSAPP ─── */
+    .whatsapp-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      width: 60px; height: 60px;
+      background: #25D366; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+      text-decoration: none; font-size: 1.8rem;
+      animation: bounce 3s infinite;
+      transition: transform 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    /* ─── LOCATION SECTION ─── */
+    .location-section { padding: 6rem 5%; background: var(--green-mid); border-top: 1px solid rgba(82,183,136,0.2); border-bottom: 1px solid rgba(82,183,136,0.2); }
+    .location-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+    .location-inner .section-title { color: var(--white); margin-bottom: 2.5rem; }
+    .location-inner .section-title span { color: var(--amber); }
+    .location-map-wrap { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); border: 1px solid rgba(82,183,136,0.25); }
+    .location-map-wrap iframe { width: 100%; height: 460px; display: block; border: none; }
+    .location-footer { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; margin-top: 2rem; text-align: left; align-items: center; }
+    .location-address-block { display: flex; flex-direction: column; gap: 0.6rem; }
+    .location-address-block p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6; }
+    .directions-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; background: linear-gradient(135deg, var(--amber), var(--amber-dark)); color: white; text-decoration: none; padding: 0.65rem 1.4rem; border-radius: 50px; font-weight: 700; font-size: 0.85rem; transition: transform 0.2s, box-shadow 0.2s; width: fit-content; }
+    .directions-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(244,162,97,0.4); }
+    .nearby-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .nearby-chip { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.45rem 1rem; font-size: 0.82rem; color: rgba(255,255,255,0.8); }
+    .nearby-chip-dist { color: var(--amber); font-weight: 700; font-size: 0.75rem; }
+    @media (max-width: 768px) { .location-map-wrap iframe { height: 320px; } .location-footer { grid-template-columns: 1fr; } }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--green-dark); color: rgba(255,255,255,0.55);
+      padding: 4rem 5% 2rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; max-width: 1200px; margin: 0 auto;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--amber); }
+    .footer-bottom {
+      max-width: 1200px; margin: 2rem auto 0;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.82rem;
+    }
+    .footer-bottom a { color: var(--amber); text-decoration: none; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    @keyframes scrollAnim {
+      0% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      100% { opacity: 0; transform: scaleY(0.5); transform-origin: bottom; }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .trucks-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    }
+
+    @media (max-width: 768px) {
+      .location-grid { grid-template-columns: 1fr; }
+      .location-map iframe { height: 300px; }
+      section { padding: 4rem 5%; }
+
+      /* Nav */
+      nav { padding: 1rem 5%; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      /* About */
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-images { height: 300px; }
+      .about-badge-float { font-size: 0.78rem; padding: 0.75rem 1rem; }
+      .about-features { grid-template-columns: 1fr; }
+
+      /* Vehicle */
+      .vehicle-center { margin-bottom: 2.5rem; }
+      .vehicle-slideshow { height: 260px; }
+      .truck-features { grid-template-columns: 1fr; }
+
+      /* Steps */
+      .steps { grid-template-columns: 1fr 1fr; }
+      .steps::before { display: none; }
+
+      /* Destinations */
+      .dest-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .dest-card { min-height: 200px; }
+      .dest-card:first-child { grid-row: span 1; }
+
+      /* Experience & Testimonials */
+      .exp-cards { grid-template-columns: 1fr; }
+      .testi-card { flex: 0 0 calc(100% - 1rem); }
+      #testiPrev, #testiNext { display: none; }
+
+      /* Contact */
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+
+      /* Hero */
+      .hero-stats { display: none; }
+      .hero-scroll { display: none; }
+      .hero-content { padding-top: 80px; }
+    }
+
+    @media (max-width: 480px) {
+      section { padding: 3rem 5%; }
+
+      /* About */
+      .about-images { height: 240px; }
+      .about-badge-float { display: none; }
+
+      /* Destinations */
+      .dest-grid { grid-template-columns: 1fr; }
+      .dest-card { min-height: 180px; }
+
+      /* Steps */
+      .steps { grid-template-columns: 1fr; }
+
+      /* Vehicle */
+      .truck-photo-wrap, .coming-soon-photo { height: 220px; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr; }
+
+      /* Hero buttons stack */
+      .hero-sub { font-size: 0.95rem; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; max-width: 300px; text-align: center; }
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(13,43,30,0.98); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: white; text-decoration: none; font-size: 1.4rem; font-weight: 600; }
+    .mobile-menu a:hover { color: var(--amber); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 2rem; color: white; cursor: pointer; background: none; border: none; }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="#about" onclick="closeMobile()">Home</a>
+  <a href="trucks.html" onclick="closeMobile()">Trucks</a>
+  <a href="destinations.html" onclick="closeMobile()">Destinations</a>
+  <a href="howitworks.html" onclick="closeMobile()">How It Works</a>
+  <a href="contact.html" onclick="closeMobile()">Contact</a>
+  <a href="https://wa.me/50684980851" target="_blank" style="color:var(--amber)">Book via WhatsApp</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-icon"><img src="https://img1.wsimg.com/isteam/ip/197458aa-0c8d-408c-9705-637913c517ca/Social%20no%20Shadow.png/:/rs=w:128,h:128,cg:true,m/cr=w:128,h:128/qt=q:95" alt="Costa Rica Overlanding Logo" /></div>
+    <div class="nav-logo-text">
+      Costa Rica Overlanding
+      <span>4x4 Camper Rentals</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Home</a></li>
+    <li><a href="trucks.html">Trucks</a></li>
+    <li><a href="destinations.html">Destinations</a></li>
+    <li><a href="howitworks.html">How It Works</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" onclick="openMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Costa Rica's Premier Overlanding Experience</div>
+    <h1 class="hero-title">Your <span class="highlight">Adventure,</span><br>Your Rules.</h1>
+    <p class="hero-sub">Explore the raw beauty of Costa Rica in a fully-equipped 4x4 camper truck. No fixed tours, no itineraries — just you, the road, and paradise.</p>
+    <div class="hero-buttons">
+      <a href="contact.html" class="btn-primary">Book Your Adventure</a>
+      <a href="#vehicle" class="btn-secondary">See The Trucks ↓</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label">Guests Max</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">24/7</div>
+      <div class="hero-stat-label">Support</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">100%</div>
+      <div class="hero-stat-label">Off-Grid Ready</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-images reveal">
+      <div class="about-img-main">
+        <img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/23cd8527-ee28-4ac1-8f6a-b72246a099d9/WhatsApp+Image+2026-03-11+at+11.02.02+AM.jpeg?content-type=image%2Fjpeg" alt="Costa Rica jungle" />
+      </div>
+      <div class="about-img-small">
+        <img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/1bb2f946-159f-43a2-b79e-604d5ea72204/WhatsApp+Image+2026-03-11+at+11.02.02+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="Overlanding adventure" />
+      </div>
+      <div class="about-badge-float">
+        <strong>⭐ 4.9</strong>
+        Rated by<br>Adventurers
+      </div>
+    </div>
+    <div class="about-content reveal">
+      <span class="section-label">Who We Are</span>
+      <h2 class="section-title">Freedom to Explore <span class="accent">Costa Rica</span> Your Way</h2>
+      <p class="section-subtitle">We're not a tour operator — we're freedom enablers. Our custom-built 4x4 camper trucks give you everything you need to discover Costa Rica's most breathtaking corners on your own schedule.</p>
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="about-feature-icon">🗺️</div>
+          <div class="about-feature-text">
+            <h4>Custom Itinerary</h4>
+            <p>You choose where to go</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🛡️</div>
+          <div class="about-feature-text">
+            <h4>24/7 Support</h4>
+            <p>We've got your back</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">⚡</div>
+          <div class="about-feature-text">
+            <h4>Off-Grid Ready</h4>
+            <p>Generator & Solar</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">✅</div>
+          <div class="about-feature-text">
+            <h4>Ready to camp</h4>
+            <p>Gear provided</p>
+          </div>
+        </div>
+      </div>
+      <a href="#contact" class="btn-primary" style="display:inline-block; margin-top:2rem; text-decoration:none;">Get Availability & Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- VEHICLE / FLEET -->
+<section id="vehicle">
+  <div class="fleet-section-header reveal">
+    <span class="section-label" style="color:var(--green-accent)">Our Fleet</span>
+    <h2 class="section-title" style="color:white">Pick Your <em style="color:var(--amber)">Ride</em></h2>
+    <p class="section-subtitle" style="color:rgba(255,255,255,0.6);margin:1rem auto 0">Our 4x4 campers are custom built to explore everything Costa Rica has to offer in comfort and style.</p>
+  </div>
+  <div class="trucks-grid">
+
+    <!-- The Urchin -->
+    <div class="truck-card available reveal">
+      <div class="truck-photo-wrap">
+        <span class="truck-status-badge badge-available">Available Now</span>
+        <div class="vehicle-slideshow" id="truckSlideshow">
+          <div class="vehicle-slide active"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/0e40c05c-5dab-44d1-8413-2c69523b493d/WhatsApp+Image+2026-03-11+at+10.28.02+AM+%283%29.jpeg?content-type=image%2Fjpeg" alt="The Urchin" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/69959991-f908-460d-a146-a76762f79ed2/WhatsApp+Image+2026-03-11+at+10.28.00+AM.jpeg?content-type=image%2Fjpeg" alt="Camper interior" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/9c654898-7b26-40ea-a7e7-01a9d8e7b684/WhatsApp+Image+2026-03-11+at+10.28.16+AM+%282%29.jpeg?content-type=image%2Fjpeg" alt="Camper on the road" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/5bb61499-2748-47d3-9d32-37da5ba31ca8/WhatsApp+Image+2026-03-11+at+10.28.06+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="Camper adventure" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/23498fd5-a88a-4a3b-8f8f-70daf3e19499/WhatsApp+Image+2026-03-11+at+10.28.16+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/4e57841d-0698-4e0b-85d5-15d968d31649/WhatsApp+Image+2026-03-11+at+10.28.15+AM.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/6297cb98-f68c-4a24-98c6-3075b3413f03/WhatsApp+Image+2026-03-11+at+10.28.06+AM+%284%29.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/1f2eeada-a80c-43d2-894f-1738e1e36471/WhatsApp+Image+2026-03-11+at+10.28.06+AM.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/38d3dd7b-be03-4ee8-bd9f-4541d1f7272d/WhatsApp+Image+2026-03-11+at+10.28.06+AM+%287%29.jpeg?content-type=image%2Fjpeg" alt="Camper truck" /></div>
+          <button class="slide-arrow prev" aria-label="Previous">&#8249;</button>
+          <button class="slide-arrow next" aria-label="Next">&#8250;</button>
+          <div class="slide-dots"></div>
+        </div>
+      </div>
+      <div class="truck-info">
+        <div class="truck-name">The Urchin</div>
+        <div class="truck-type">Custom-Built 4×4 Camper Truck</div>
+        <div class="truck-specs">
+          <div class="truck-spec"><div class="truck-spec-val">3</div><div class="truck-spec-label">Guests</div></div>
+          <div class="truck-spec"><div class="truck-spec-val">4×4</div><div class="truck-spec-label">Drive</div></div>
+          <div class="truck-spec"><div class="truck-spec-val">∞</div><div class="truck-spec-label">Adventure</div></div>
+        </div>
+        <div class="truck-features">
+          <div class="truck-feature">Air Conditioning</div>
+          <div class="truck-feature">Full Kitchen</div>
+          <div class="truck-feature">Roof Fan</div>
+          <div class="truck-feature">Outdoor Shower</div>
+          <div class="truck-feature">Queen + Single Beds</div>
+          <div class="truck-feature">Generator + Solar</div>
+          <div class="truck-feature">Screened Windows</div>
+          <div class="truck-feature">Camping Gear</div>
+          <div class="truck-feature">Automatic Transmission</div>
+          <div class="truck-feature">Portable Toilet</div>
+        </div>
+        <a href="contact.html" class="truck-cta">Book The Urchin →</a>
+      </div>
+    </div>
+
+    <!-- The Barnacle -->
+    <div class="truck-card available reveal">
+      <div class="truck-photo-wrap">
+        <span class="truck-status-badge badge-available">Available Now</span>
+        <div class="vehicle-slideshow" id="barnacleSlideshow">
+          <div class="vehicle-slide active"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/b7812003-b510-4bb7-b1fc-c6856f94e33c/WhatsApp+Image+2026-03-12+at+8.42.48+AM+%281%29.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/e610008b-f4a3-4487-9917-d8542390520b/WhatsApp+Image+2026-03-12+at+8.42.48+AM+%282%29.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/107feff4-f791-4fd5-97ab-fddef26245fc/WhatsApp+Image+2026-03-12+at+8.42.48+AM.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/5b45d2d4-c9fd-4237-a2ab-f31ff427033e/WhatsApp+Image+2026-03-12+at+8.42.49+AM.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/67c87260-f1f9-4518-89ef-caf1cfdd066f/WhatsApp+Image+2026-03-11+at+11.10.42+AM.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/a689d744-0621-4a25-99eb-33f6e280f2c1/WhatsApp+Image+2026-03-11+at+11.10.44+AM+%285%29.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+          <div class="vehicle-slide"><img src="https://images.squarespace-cdn.com/content/686edb13ef2a737e2f7e7698/aa2ac10e-1956-4077-a8c1-a7f6fc126d0b/WhatsApp+Image+2026-03-11+at+11.10.44+AM+%282%29.jpeg?content-type=image%2Fjpeg" alt="The Barnacle" /></div>
+          <button class="slide-arrow prev" aria-label="Previous">&#8249;</button>
+          <button class="slide-arrow next" aria-label="Next">&#8250;</button>
+          <div class="slide-dots"></div>
+        </div>
+      </div>
+      <div class="truck-info">
+        <div class="truck-name">The Barnacle</div>
+        <div class="truck-type">Custom-Built 4×4 Camper Truck</div>
+        <div class="truck-specs">
+          <div class="truck-spec"><div class="truck-spec-val">3</div><div class="truck-spec-label">Guests</div></div>
+          <div class="truck-spec"><div class="truck-spec-val">4×4</div><div class="truck-spec-label">Drive</div></div>
+          <div class="truck-spec"><div class="truck-spec-val">∞</div><div class="truck-spec-label">Adventure</div></div>
+        </div>
+        <div class="truck-features">
+          <div class="truck-feature">Air Conditioning</div>
+          <div class="truck-feature">Full Kitchen</div>
+          <div class="truck-feature">Roof Fan</div>
+          <div class="truck-feature">Outdoor Shower</div>
+          <div class="truck-feature">Queen + Single Beds</div>
+          <div class="truck-feature">Generator + Solar</div>
+          <div class="truck-feature">Screened Windows</div>
+          <div class="truck-feature">Camping Gear</div>
+          <div class="truck-feature">Automatic Transmission</div>
+          <div class="truck-feature">Portable Toilet</div>
+        </div>
+        <a href="contact.html" class="truck-cta">Book The Barnacle →</a>
+      </div>
+    </div>
+
+    <!-- Truck #3 Coming Soon -->
+    <div class="truck-card coming reveal">
+      <div class="coming-soon-photo">
+        <span class="truck-status-badge badge-coming">Coming Soon</span>
+        <span class="coming-soon-label">???</span>
+      </div>
+      <div class="truck-info">
+        <div class="truck-name">Truck #3</div>
+        <div class="truck-type">Custom-Built 4×4 Camper Truck</div>
+        <div class="truck-specs">
+          <div class="truck-spec"><div class="truck-spec-val">–</div><div class="truck-spec-label">Guests</div></div>
+          <div class="truck-spec"><div class="truck-spec-val">4×4</div><div class="truck-spec-label">Drive</div></div>
+          <div class="truck-spec"><div class="truck-spec-val">∞</div><div class="truck-spec-label">Adventure</div></div>
+        </div>
+        <p style="color:rgba(255,255,255,0.3);font-size:0.88rem;line-height:1.6;margin-bottom:1.5rem;">Another adventure machine being built from the ground up. Stay tuned.</p>
+        <div class="truck-cta-disabled">Coming Soon</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="how-header reveal">
+    <span class="section-label">Simple Process</span>
+    <h2 class="section-title">Ready to Roll in <span class="accent">4 Easy Steps</span></h2>
+    <p class="section-subtitle">We make it effortless so you can focus on the adventure ahead.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">📞</div>
+      <h3>1. Reach Out</h3>
+      <p>Contact us via WhatsApp, email, or the form below to check availability and discuss your trip.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">🗓️</div>
+      <h3>2. Plan Your Route</h3>
+      <p>We give expert advice on navigating the country and tips to make finding camp for the night a breeze.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">🚗</div>
+      <h3>3. Pick Up &amp; Go</h3>
+      <p>Meet up, get a full orientation of the truck, then hit the road your way.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">🌅</div>
+      <h3>4. Explore Freely</h3>
+      <p>Wake up wherever you want, move at your pace, and make memories that last a lifetime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section id="destinations">
+  <div class="dest-header reveal">
+    <span class="section-label">Explore Freely</span>
+    <h2 class="section-title">Costa Rica Is Your <span class="accent">Playground</span></h2>
+    <p class="section-subtitle">From misty cloud forests to black-sand beaches — everywhere is within reach.</p>
+  </div>
+  <div class="dest-grid">
+    <div class="dest-card reveal">
+      <img src="https://costaricaexperts.com/wp-content/uploads/2025/02/Osa-Peninsula-Home-to-Corcovado.jpeg" alt="Costa Rica jungle" />
+      <div class="dest-overlay">
+        <span class="dest-tag">Rainforest</span>
+        <div class="dest-name">Corcovado &amp; Osa</div>
+        <div class="dest-desc">The most biologically intense place on Earth</div>
+      </div>
+    </div>
+    <div class="dest-card reveal">
+      <img src="https://www.travelexcellence.com/wp-content/uploads/2020/10/Manuel_Antonio_Nat_Park_Cathedral_Point-1-1-scaled.jpg" alt="Beach Costa Rica" />
+      <div class="dest-overlay">
+        <span class="dest-tag">Pacific Coast</span>
+        <div class="dest-name">Manuel Antonio</div>
+        <div class="dest-desc">Pristine beaches meets lush jungle</div>
+      </div>
+    </div>
+    <div class="dest-card reveal">
+      <img src="https://www.arenalobservatorylodge.com/wp-content/uploads/2023/01/Volcan-Arenal-4.jpg" alt="Volcano Costa Rica" />
+      <div class="dest-overlay">
+        <span class="dest-tag">Volcano</span>
+        <div class="dest-name">Arenal Volcano</div>
+        <div class="dest-desc">Hot springs at the foot of a giant</div>
+      </div>
+    </div>
+    <div class="dest-card reveal">
+      <img src="https://www.costaricarios.com/wp-content/uploads/2019/08/Depositphotos_187303892_l-2015.jpg" alt="Waterfall" />
+      <div class="dest-overlay">
+        <span class="dest-tag">Hidden Gems</span>
+        <div class="dest-name">Waterfalls</div>
+        <div class="dest-desc">Off-road trails to stunning cascades</div>
+      </div>
+    </div>
+    <div class="dest-card reveal">
+      <img src="https://d1cq5bmaro4ubb.cloudfront.net/wp-content/uploads/2025/02/Santa-Teresa-Costa-Rica-1-scaled.jpeg" alt="Surfing" />
+      <div class="dest-overlay">
+        <span class="dest-tag">Surf</span>
+        <div class="dest-name">Santa Teresa</div>
+        <div class="dest-desc">World-class waves, laid-back vibes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE SECTION -->
+<section id="experience">
+  <div class="experience-inner">
+    <span class="section-label">Why Choose Us</span>
+    <h2 class="section-title">The <em>Costa Rica Overlanding</em> Difference</h2>
+    <p class="section-subtitle">We built our rigs from the ground up, what you need and don't need to explore all of Costa Rica.</p>
+    <div class="exp-cards">
+      <div class="exp-card reveal">
+        <div class="exp-card-icon">🏕️</div>
+        <h3>Camp Anywhere</h3>
+        <p>With full off-grid capability, you're not limited to campgrounds. Sleep where the view is best.</p>
+      </div>
+      <div class="exp-card reveal">
+        <div class="exp-card-icon">🤝</div>
+        <h3>Local Expertise</h3>
+        <p>Dirt roads, hidden beaches, secret spots — the truck handles wherever your curiosity takes you.</p>
+      </div>
+      <div class="exp-card reveal">
+        <div class="exp-card-icon">📱</div>
+        <h3>Always Connected</h3>
+        <p>24/7 support via WhatsApp means help is always one message away, wherever you are.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testi-header reveal">
+    <span class="section-label">Happy Adventurers</span>
+    <h2 class="section-title">What Our <span class="accent">Guests Say</span></h2>
+  </div>
+  <div class="testi-carousel-wrap">
+    <div class="testi-track-outer">
+      <div class="testi-track" id="testiTrack">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"We rented the camper for 16 days this august and it was superb. The camper is well equipped and gives you a totally unique way to travel and see Costa Rica. It allows you to always be in nature which is what Costa Rica is all about. The vehicle is also a superb and necessary 4x4 which makes travelling and managing the consistently surprising Costa Rican roads. Highly recommended."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">S</div>
+            <div><div class="testi-name">Sarah M.</div><div class="testi-location">Verified Guest</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Would definitely rent again! Jacobs Camper was the perfect way for us to get around and explore some beautiful parts of the country. Waking up in the camper right at the beach was a dream. Jacob is extremely friendly and helpful. He recommended us some places, arranged airport pick up/drop off and responded very fast when we had questions. You can’t do anything wrong with this one!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar">J</div>
+            <div><div class="testi-name">James & Lucia</div><div class="testi-location">Verified Guest</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Jacob was easy to work with, always answered questions quickly. Camper was awesome for our 8 day trip. Would recommend to anyone looking for an adventure!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar">T</div>
+            <div><div class="testi-name">Thomas K.</div><div class="testi-location">Verified Guest</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Amazing 9-day trip! Best way to see Costa Rica. Jacob responded within minutes when we had a question! The camper is great! I loved the outside shower when returning from the beach! Couldn’t have been better! Jacob recommended amazing places and was a great host!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar">P</div>
+            <div><div class="testi-name">Patricia</div><div class="testi-location">Verified Guest</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Jacob goes above and beyond! Very helpful. It’s a great ride and you’ll get lots of compliments. 4x4 plus house, what more do you need? Parking can be tricky but you can’t have it all. 10/10 would rent again."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">S</div>
+            <div><div class="testi-name">Shane</div><div class="testi-location">Verified Guest</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Great experience to explore Costa Rica by van, we were able to camp wildly in paradise places that would never have been accessible without a 4x4 camper! The camper is super spacious and well equipped! Jacob was always available for questions and provided assistance along the way!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar">H</div>
+            <div><div class="testi-name">Helen</div><div class="testi-location">Verified Guest</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="testi-btn" id="testiPrev">&#8592;</button>
+    <button class="testi-btn" id="testiNext">&#8594;</button>
+    <div class="testi-carousel-controls">
+      <div class="testi-dots" id="testiDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <span class="section-label">Get In Touch</span>
+      <h2 class="section-title">Ready to Start Your <span class="accent">Adventure?</span></h2>
+      <p class="section-subtitle">Reach out to check availability, ask questions, or just tell us your dream trip. We respond fast — usually within hours.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <h4>Location</h4>
+            <p>Calle Hermosa Garabito, Puntarenas 61101, Costa Rica</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div class="contact-item-text">
+            <h4>Phone / WhatsApp</h4>
+            <a href="tel:+50684980851">(506) 8498-0851</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <div class="contact-item-text">
+            <h4>Email</h4>
+            <a href="mailto:costaricaoverlanding@gmail.com">costaricaoverlanding@gmail.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="https://www.facebook.com/102731607798887" target="_blank" class="social-link" title="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/costaricaoverlanding" target="_blank" class="social-link" title="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@costaricaoverlanding" target="_blank" class="social-link" title="YouTube">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+        <a href="https://wa.me/50684980851" target="_blank" class="social-link" title="WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <h3>Send a Message</h3>
+      <p>Fill out the form and we'll get back to you with availability and pricing.</p>
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="access_key" value="73a8a60c-3c2f-4f1c-8f99-1ac9fe8ff06c" />
+        <input type="hidden" name="subject" value="Camper Rental Inquiry – Costa Rica Overlanding" />
+        <input type="hidden" name="from_name" value="Costa Rica Overlanding Website" />
+        <input type="checkbox" name="botcheck" style="display:none" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="John Smith" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="john@email.com" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="checkin">Check-In Date</label>
+            <input type="date" id="checkin" name="checkin" />
+          </div>
+          <div class="form-group">
+            <label for="checkout">Check-Out Date</label>
+            <input type="date" id="checkout" name="checkout" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="guests">Number of Guests</label>
+          <select id="guests" name="guests">
+            <option value="">Select guests</option>
+            <option value="1">1 person</option>
+            <option value="2">2 people</option>
+            <option value="3">3 people (max)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Tell Us About Your Dream Trip</label>
+          <textarea id="message" name="message" placeholder="Where do you want to explore? Any specific destinations or activities in mind?"></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="submitBtn">Send Message →</button>
+        <p id="formSuccess" style="display:none; margin-top:1rem; color:#2D6A4F; font-weight:600; text-align:center;">✅ Message sent! We'll be in touch soon.</p>
+        <p id="formError" style="display:none; margin-top:1rem; color:#E76F51; font-weight:600; text-align:center;">Something went wrong. Please try again or contact us via WhatsApp.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section">
+  <div class="location-inner">
+    <span class="section-label">Where to Find Us</span>
+    <h2 class="section-title">Our <span>Location</span></h2>
+    <div class="location-map-wrap">
+      <iframe src="https://maps.google.com/maps?q=9.57975,-84.59578&z=14&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="location-footer">
+      <div class="location-address-block">
+        <p>📍 Playa Hermosa, Jacó<br>Garabito, Puntarenas, Costa Rica</p>
+        <a href="https://maps.google.com/maps?q=9.57975,-84.59578" target="_blank" class="directions-btn">↗ Get Directions</a>
+      </div>
+      <div class="nearby-chips">
+        <div class="nearby-chip">🏖️ Jacó Beach <span class="nearby-chip-dist">~10 min</span></div>
+        <div class="nearby-chip">🐒 Manuel Antonio NP <span class="nearby-chip-dist">~1 hr 20 min</span></div>
+        <div class="nearby-chip">✈️ SJO Airport <span class="nearby-chip-dist">~1 hr 30 min</span></div>
+        <div class="nearby-chip">🌿 Monteverde <span class="nearby-chip-dist">~3 hrs</span></div>
+        <div class="nearby-chip">🌋 Arenal Volcano <span class="nearby-chip-dist">~3.5 hrs</span></div>
+        <div class="nearby-chip">🐋 Uvita / Whale's Tail <span class="nearby-chip-dist">~2.5 hrs</span></div>
+        <div class="nearby-chip">🏄 Dominical <span class="nearby-chip-dist">~2 hrs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:40px;height:40px;border-radius:10px;overflow:hidden;"><img src="https://img1.wsimg.com/isteam/ip/197458aa-0c8d-408c-9705-637913c517ca/Social%20no%20Shadow.png/:/rs=w:128,h:128,cg:true,m/cr=w:128,h:128/qt=q:95" alt="Logo" style="width:100%;height:100%;object-fit:contain;" /></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;color:white;font-size:1rem;line-height:1.1;">
+          Costa Rica Overlanding<br>
+          <span style="font-size:0.65rem;color:var(--amber);letter-spacing:2px;font-weight:600;">4X4 CAMPER RENTALS</span>
+        </div>
+      </div>
+      <p>Your home on wheels for exploring the most beautiful country on Earth — on your terms, at your pace.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#vehicle">The Truck</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="destinations.html">Destinations</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+50684980851">(506) 8498-0851</a></li>
+        <li><a href="mailto:costaricaoverlanding@gmail.com">Email Us</a></li>
+        <li><a href="https://wa.me/50684980851">WhatsApp</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/costaricaoverlanding" target="_blank">Instagram</a></li>
+        <li><a href="https://www.facebook.com/102731607798887" target="_blank">Facebook</a></li>
+        <li><a href="https://www.youtube.com/@costaricaoverlanding" target="_blank">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Costa Rica Overlanding. All rights reserved.</span>
+    <span>Calle Hermosa Garabito, Puntarenas, Costa Rica</span>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/50684980851" target="_blank" class="whatsapp-float" title="Chat on WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Mobile menu
+  function openMobile() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const success = document.getElementById('formSuccess');
+    const error = document.getElementById('formError');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    success.style.display = 'none';
+    error.style.display = 'none';
+    const data = new FormData(e.target);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      const json = await res.json();
+      if (json.success) {
+        success.style.display = 'block';
+        e.target.reset();
+      } else {
+        error.style.display = 'block';
+      }
+    } catch {
+      error.style.display = 'block';
+    }
+    btn.textContent = 'Send Message →';
+    btn.disabled = false;
+  }
+
+  // Testimonial carousel
+  (function() {
+    const track = document.getElementById('testiTrack');
+    const dotsWrap = document.getElementById('testiDots');
+    const cards = track.querySelectorAll('.testi-card');
+    let perView = window.innerWidth <= 768 ? 1 : 3;
+    let current = 0;
+    const total = cards.length;
+    const steps = Math.ceil(total / perView);
+
+    // Build dots
+    function buildDots() {
+      dotsWrap.innerHTML = '';
+      for (let i = 0; i < steps; i++) {
+        const d = document.createElement('button');
+        d.className = 'testi-dot' + (i === 0 ? ' active' : '');
+        d.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(d);
+      }
+    }
+
+    function goTo(n) {
+      current = (n + steps) % steps;
+      const cardWidth = cards[0].getBoundingClientRect().width + 24; // card + gap
+      track.style.transform = `translateX(-${current * perView * cardWidth}px)`;
+      dotsWrap.querySelectorAll('.testi-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    document.getElementById('testiPrev').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('testiNext').addEventListener('click', () => goTo(current + 1));
+
+    buildDots();
+
+    // Auto-advance every 5s
+    let autoplay = setInterval(() => goTo(current + 1), 5000);
+    track.parentElement.addEventListener('mouseenter', () => clearInterval(autoplay));
+    track.parentElement.addEventListener('mouseleave', () => { autoplay = setInterval(() => goTo(current + 1), 5000); });
+
+    // Touch swipe support
+    let startX = 0;
+    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+    });
+
+    window.addEventListener('resize', () => {
+      const newPer = window.innerWidth <= 768 ? 1 : 3;
+      if (newPer !== perView) { perView = newPer; current = 0; buildDots(); goTo(0); }
+    });
+  })();
+
+  // Truck slideshows
+  function initSlideshow(containerId) {
+    const wrap = document.getElementById(containerId);
+    if (!wrap) return;
+    const slides = wrap.querySelectorAll('.vehicle-slide');
+    const dots = wrap.querySelector('.slide-dots');
+    let cur = 0;
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'slide-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => go(i));
+      dots.appendChild(d);
+    });
+    function go(n) {
+      slides[cur].classList.remove('active');
+      dots.children[cur].classList.remove('active');
+      cur = (n + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots.children[cur].classList.add('active');
+    }
+    wrap.querySelector('.prev').addEventListener('click', () => go(cur - 1));
+    wrap.querySelector('.next').addEventListener('click', () => go(cur + 1));
+  }
+  initSlideshow('truckSlideshow');
+  initSlideshow('barnacleSlideshow');
+
+  // Smooth reveal stagger for cards
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 4) * 0.1}s`;
+  });
+</script>
+</body>
+</html>

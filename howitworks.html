@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>How It Works – Costa Rica Overlanding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #0D2B1E;
+      --green-mid:    #1B4332;
+      --green-light:  #2D6A4F;
+      --green-accent: #52B788;
+      --amber:        #F4A261;
+      --amber-dark:   #E76F51;
+      --cream:        #F8F4EE;
+      --white:        #FFFFFF;
+      --text-muted:   #6B7A6E;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; background: var(--green-dark); color: var(--white); overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--green-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 1.2rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(13,43,30,0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(82,183,136,0.15);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .nav-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .nav-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--white); line-height: 1.1; }
+    .nav-logo-text span { color: var(--amber); display: block; font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--amber); }
+    .nav-cta { background: linear-gradient(135deg, var(--amber), var(--amber-dark)); color: var(--white) !important; padding: 0.6rem 1.4rem; border-radius: 50px; font-weight: 600 !important; transition: transform 0.2s, box-shadow 0.2s !important; }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(244,162,97,0.4); }
+
+    /* ─── HAMBURGER ─── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      display: none; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(13,43,30,0.98); backdrop-filter: blur(12px);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: white; text-decoration: none; font-size: 1.4rem; font-weight: 600; }
+    .mobile-menu a:hover { color: var(--amber); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 2rem; color: white; cursor: pointer; background: none; border: none; }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      padding: 9rem 5% 5rem;
+      background: linear-gradient(160deg, var(--green-dark) 0%, var(--green-mid) 100%);
+      text-align: center;
+      border-bottom: 1px solid rgba(82,183,136,0.2);
+    }
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .page-hero h1 span { color: var(--amber); }
+    .page-hero p {
+      max-width: 600px;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    /* ─── STEPS SECTION ─── */
+    .steps-section {
+      padding: 6rem 5%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      align-items: start;
+    }
+    .step:last-child { border-bottom: none; }
+
+    .step-number {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--white) !important;
+      flex-shrink: 0;
+      box-shadow: 0 4px 20px rgba(244,162,97,0.35);
+      text-decoration: none !important;
+      -webkit-text-decoration: none !important;
+    }
+
+    .step-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: 0.75rem;
+      color: var(--white);
+    }
+    .step-content p {
+      color: rgba(255,255,255,0.72);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 680px;
+    }
+    .step-content .step-note {
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(82,183,136,0.12);
+      border: 1px solid rgba(82,183,136,0.25);
+      border-radius: 50px;
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+      color: var(--green-accent);
+      font-weight: 500;
+    }
+
+    /* ─── INCLUDES SECTION ─── */
+    .includes-section {
+      background: var(--green-mid);
+      padding: 6rem 5%;
+      border-top: 1px solid rgba(82,183,136,0.15);
+      border-bottom: 1px solid rgba(82,183,136,0.15);
+    }
+    .includes-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green-accent);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      margin-bottom: 3rem;
+    }
+    .section-title span { color: var(--amber); }
+
+    .includes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .include-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .include-card:hover { border-color: rgba(82,183,136,0.4); transform: translateY(-4px); }
+    .include-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .include-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+    .include-card p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+
+    /* ─── FAQ SECTION ─── */
+    .faq-section {
+      padding: 6rem 5%;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 1.75rem 0;
+    }
+    .faq-item:first-of-type { border-top: 1px solid rgba(255,255,255,0.1); }
+    .faq-question {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      user-select: none;
+    }
+    .faq-question::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--amber);
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-question::after { transform: rotate(45deg); }
+    .faq-answer {
+      display: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      padding-top: 1rem;
+    }
+    .faq-item.open .faq-answer { display: block; }
+
+    /* ─── CTA BANNER ─── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+      border-top: 1px solid rgba(82,183,136,0.2);
+      padding: 5rem 5%;
+      text-align: center;
+    }
+    .cta-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      margin-bottom: 1rem;
+    }
+    .cta-banner h2 span { color: var(--amber); }
+    .cta-banner p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2.5rem;
+      font-size: 1.05rem;
+    }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(244,162,97,0.4); }
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      border: 2px solid rgba(255,255,255,0.35);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* ─── LOCATION SECTION ─── */
+    .location-section { padding: 6rem 5%; background: var(--green-mid); border-top: 1px solid rgba(82,183,136,0.2); border-bottom: 1px solid rgba(82,183,136,0.2); }
+    .location-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+    .location-inner .section-title { margin-bottom: 2.5rem; }
+    .location-map-wrap { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); border: 1px solid rgba(82,183,136,0.25); }
+    .location-map-wrap iframe { width: 100%; height: 460px; display: block; border: none; }
+    .location-footer { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; margin-top: 2rem; text-align: left; align-items: center; }
+    .location-address-block { display: flex; flex-direction: column; gap: 0.6rem; }
+    .location-address-block p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6; }
+    .directions-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; background: linear-gradient(135deg, var(--amber), var(--amber-dark)); color: white; text-decoration: none; padding: 0.65rem 1.4rem; border-radius: 50px; font-weight: 700; font-size: 0.85rem; transition: transform 0.2s, box-shadow 0.2s; width: fit-content; }
+    .directions-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(244,162,97,0.4); }
+    .nearby-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .nearby-chip { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.45rem 1rem; font-size: 0.82rem; color: rgba(255,255,255,0.8); }
+    .nearby-chip-dist { color: var(--amber); font-weight: 700; font-size: 0.75rem; }
+    @media (max-width: 768px) { .location-map-wrap iframe { height: 320px; } .location-footer { grid-template-columns: 1fr; } }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--green-dark); color: rgba(255,255,255,0.55); padding: 4rem 5% 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--amber); }
+    .footer-bottom { max-width: 1200px; margin: 2rem auto 0; display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .page-hero { padding: 7rem 5% 4rem; }
+      .steps-section { padding: 4rem 5%; }
+      .step { grid-template-columns: 56px 1fr; gap: 1.25rem; padding: 2rem 0; }
+      .step-number { width: 48px; height: 48px; font-size: 1.1rem; }
+      .includes-section { padding: 4rem 5%; }
+      .includes-grid { grid-template-columns: 1fr 1fr; }
+      .faq-section { padding: 4rem 5%; }
+    }
+    @media (max-width: 480px) {
+      .includes-grid { grid-template-columns: 1fr; }
+      .include-card { padding: 1.5rem 1.2rem; }
+      .step { grid-template-columns: 1fr; }
+      .step-number { margin-bottom: 0.5rem; }
+      .cta-banner { padding: 3rem 5%; }
+      .location-map-wrap iframe { height: 260px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="trucks.html" onclick="closeMobile()">Trucks</a>
+  <a href="index.html#destinations" onclick="closeMobile()">Destinations</a>
+  <a href="howitworks.html" onclick="closeMobile()" style="color:var(--amber)">How It Works</a>
+  <a href="contact.html" onclick="closeMobile()">Contact</a>
+  <a href="https://wa.me/50684980851" target="_blank" style="color:var(--amber)">Book via WhatsApp</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><img src="https://img1.wsimg.com/isteam/ip/197458aa-0c8d-408c-9705-637913c517ca/Social%20no%20Shadow.png/:/rs=w:128,h:128,cg:true,m/cr=w:128,h:128/qt=q:95" alt="Logo" /></div>
+    <div class="nav-logo-text">Costa Rica Overlanding<span>4x4 Camper Rentals</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="trucks.html">Trucks</a></li>
+    <li><a href="destinations.html">Destinations</a></li>
+    <li><a href="howitworks.html" class="active">How It Works</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" onclick="openMobile()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <h1>How It <span>Works</span></h1>
+  <p>Renting a 4x4 camper with us is simple. Here's everything you need to know to plan your perfect Costa Rica adventure.</p>
+</section>
+
+<!-- STEPS SECTION -->
+<section class="steps-section">
+  <div class="steps-grid">
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h2>Choose Your Truck</h2>
+        <p>Browse our fleet and pick the rig that fits your trip. Right now, The Urchin — our fully-equipped Toyota Hilux — is ready to roll. Two more trucks are coming soon. Have questions about specs or features? We're happy to help you decide.</p>
+        <a href="trucks.html" class="step-note">🚙 View Our Fleet</a>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h2>Get in Touch & Check Availability</h2>
+        <p>Reach out via WhatsApp or the contact form with your dates and any questions. We'll confirm availability, walk you through what's included, and answer anything about permits, routes, or conditions. No automated bots — you're talking directly with us.</p>
+        <span class="step-note">📱 WhatsApp: +506 8498 0851</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h2>Book & Secure Your Dates</h2>
+        <p>Once we confirm your truck and dates we require a 30% down payment to complete your reservation. We accept PayPal bank transfers and other convenient options for payment. We discuss what works best for you!</p>
+        <span class="step-note">📅 Minimum 5-night rental</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <h2>Pick Up Your Rig</h2>
+        <p>We offer free local pickup and drop off at our beauiful location near the Beach in Playa hermosa Jaco. For rentals over 14 nights we include Free pickup and drop off at SJO airport (normal business hours only) We can also arrange one of our trusted drivers to get to and from our location.</p>
+        <span class="step-note">📍 Flexible pickup location</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">5</div>
+      <div class="step-content">
+        <h2>Adventure — On Your Terms</h2>
+        <p>The road is yours. Camp on the beach, push into the cloud forest, or chase waterfalls in the highlands. There's no fixed itinerary — just you, the truck, and Costa Rica. We're always reachable by phone or WhatsApp if you need anything along the way.</p>
+        <span class="step-note">🌍 Go anywhere the roads lead</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">6</div>
+      <div class="step-content">
+        <h2>Return & Drop Off</h2>
+        <p>Bring the truck back at the agreed time and location. We'll do a quick inspection together, settle the final balance if applicable, and that's it — adventure complete. We love hearing about the places you went, so feel free to share your stories.</p>
+        <span class="step-note">✅ Flexible drop-off scheduling</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="includes-section">
+  <div class="includes-inner">
+    <p class="section-label">Everything You Need</p>
+    <h2 class="section-title">What's <span>Included</span></h2>
+    <div class="includes-grid">
+      <div class="include-card">
+        <span class="include-icon">🛏️</span>
+        <h3>Sleeping Setup</h3>
+        <p>Built-in queen bed and single bed inside the camper body — comfortable, private, and ready to sleep in every night.</p>
+      </div>
+      <div class="include-card">
+        <span class="include-icon">🍳</span>
+        <h3>Camp Kitchen</h3>
+        <p>Propane stove, cookware, utensils, cutting board, and a full set of supplies to cook on the road.</p>
+      </div>
+      <div class="include-card">
+        <span class="include-icon">🧊</span>
+        <h3>Fridge / Cooler</h3>
+        <p>12V compressor fridge keeps food and drinks cold on even the longest drives between towns.</p>
+      </div>
+      <div class="include-card">
+        <span class="include-icon">🔋</span>
+        <h3>Power System</h3>
+        <p>Solar panels and onboard generator keep the batteries topped up and the AC running — even deep in the jungle with no hookups in sight.</p>
+      </div>
+      <div class="include-card">
+        <span class="include-icon">🚽</span>
+        <h3>Portable Toilet</h3>
+        <p>Camp anywhere without worrying about facilities. The portable toilet means true off-grid freedom, no matter how remote you go.</p>
+      </div>
+      <div class="include-card">
+        <span class="include-icon">🚿</span>
+        <h3>Outdoor Shower</h3>
+        <p>Rinse off after the beach, waterfall, or muddy trail with the built-in outdoor shower fed from the onboard water tank.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <p class="section-label" style="text-align:center;">Frequently Asked Questions</p>
+  <h2 class="section-title" style="text-align:center; margin-bottom:2.5rem;">Got <span>Questions?</span></h2>
+
+  <div class="faq-item">
+    <div class="faq-question">Do I need a 4x4 license or special permit?</div>
+    <div class="faq-answer">No special license is required. A standard international driver's license is all you need. We do recommend some experience driving on rough terrain, as some of our recommended routes involve unpaved mountain roads.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">What is the minimum rental period?</div>
+    <div class="faq-answer">The minimum rental is 5 nights. Most guests find that 7+ nights gives them the time to truly explore Costa Rica's diverse regions without feeling rushed.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">Is insurance included?</div>
+    <div class="faq-answer">Basic liability coverage is included in the rental. We'll go over the insurance details and any additional options during the booking process so there are no surprises.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">Can I take the truck across borders?</div>
+    <div class="faq-answer">The rental is for Costa Rica only. Cross-border trips into Panama or Nicaragua are not permitted under the standard rental agreement. Let us know if you have a specific trip in mind and we can discuss options.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">What if something goes wrong on the road?</div>
+    <div class="faq-answer">We're reachable by phone and WhatsApp throughout your trip. We'll do a full briefing at pickup so you know exactly what to do in any situation. If something mechanical comes up, we'll arrange support and do everything we can to get you back on the road quickly.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">Is there a mileage limit?</div>
+    <div class="faq-answer">No mileage cap — drive as far as your adventure takes you within Costa Rica. That's the whole point.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">What do I need to bring?</div>
+    <div class="faq-answer">Just your gear, groceries, and sense of adventure. The truck comes fully kitted with sleeping, cooking, and safety equipment. We'll provide a full packing list when you book.</div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section">
+  <div class="location-inner">
+    <p class="section-label">Where to Find Us</p>
+    <h2 class="section-title">Our <span>Location</span></h2>
+    <div class="location-map-wrap">
+      <iframe src="https://maps.google.com/maps?q=9.57975,-84.59578&z=14&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="location-footer">
+      <div class="location-address-block">
+        <p>📍 Playa Hermosa, Jacó<br>Garabito, Puntarenas, Costa Rica</p>
+        <a href="https://maps.google.com/maps?q=9.57975,-84.59578" target="_blank" class="directions-btn">↗ Get Directions</a>
+      </div>
+      <div class="nearby-chips">
+        <div class="nearby-chip">🏖️ Jacó Beach <span class="nearby-chip-dist">~10 min</span></div>
+        <div class="nearby-chip">🐒 Manuel Antonio NP <span class="nearby-chip-dist">~1 hr 20 min</span></div>
+        <div class="nearby-chip">✈️ SJO Airport <span class="nearby-chip-dist">~1 hr 30 min</span></div>
+        <div class="nearby-chip">🌿 Monteverde <span class="nearby-chip-dist">~3 hrs</span></div>
+        <div class="nearby-chip">🌋 Arenal Volcano <span class="nearby-chip-dist">~3.5 hrs</span></div>
+        <div class="nearby-chip">🐋 Uvita / Whale's Tail <span class="nearby-chip-dist">~2.5 hrs</span></div>
+        <div class="nearby-chip">🏄 Dominical <span class="nearby-chip-dist">~2 hrs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>Ready to Hit the <span>Road?</span></h2>
+  <p>Check availability and start planning your Costa Rica overland adventure.</p>
+  <div class="cta-buttons">
+    <a href="contact.html" class="btn-primary">Book Now</a>
+    <a href="trucks.html" class="btn-secondary">View Our Fleet</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:40px;height:40px;border-radius:10px;overflow:hidden;"><img src="https://img1.wsimg.com/isteam/ip/197458aa-0c8d-408c-9705-637913c517ca/Social%20no%20Shadow.png/:/rs=w:128,h:128,cg:true,m/cr=w:128,h:128/qt=q:95" alt="Logo" style="width:100%;height:100%;object-fit:contain;" /></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;color:white;font-size:1rem;line-height:1.1;">
+          Costa Rica Overlanding<br>
+          <span style="font-size:0.65rem;color:var(--amber);letter-spacing:2px;font-weight:600;">4X4 CAMPER RENTALS</span>
+        </div>
+      </div>
+      <p>Your home on wheels for exploring the most beautiful country on Earth — on your terms, at your pace.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="trucks.html">The Trucks</a></li>
+        <li><a href="howitworks.html">How It Works</a></li>
+        <li><a href="destinations.html">Destinations</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+50684980851">(506) 8498-0851</a></li>
+        <li><a href="mailto:costaricaoverlanding@gmail.com">Email Us</a></li>
+        <li><a href="https://wa.me/50684980851">WhatsApp</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/costaricaoverlanding" target="_blank">Instagram</a></li>
+        <li><a href="https://www.facebook.com/102731607798887" target="_blank">Facebook</a></li>
+        <li><a href="https://www.youtube.com/@costaricaoverlanding" target="_blank">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Costa Rica Overlanding. All rights reserved.</span>
+    <span>Calle Hermosa Garabito, Puntarenas, Costa Rica</span>
+  </div>
+</footer>
+
+<script>
+  function openMobile() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>

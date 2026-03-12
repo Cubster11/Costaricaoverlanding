@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Destinations – Costa Rica Overlanding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #0D2B1E;
+      --green-mid:    #1B4332;
+      --green-light:  #2D6A4F;
+      --green-accent: #52B788;
+      --amber:        #F4A261;
+      --amber-dark:   #E76F51;
+      --cream:        #F8F4EE;
+      --white:        #FFFFFF;
+      --text-muted:   rgba(255,255,255,0.65);
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; background: var(--green-dark); color: var(--white); overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--green-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 1.2rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(13,43,30,0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(82,183,136,0.15);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon { width: 42px; height: 42px; border-radius: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .nav-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .nav-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--white); line-height: 1.1; }
+    .nav-logo-text span { color: var(--amber); display: block; font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--amber); }
+    .nav-cta { background: linear-gradient(135deg, var(--amber), var(--amber-dark)); color: var(--white) !important; padding: 0.6rem 1.4rem; border-radius: 50px; font-weight: 600 !important; transition: transform 0.2s, box-shadow 0.2s !important; }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(244,162,97,0.4); }
+
+    /* ─── HAMBURGER ─── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      display: none; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(13,43,30,0.98); backdrop-filter: blur(12px);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: white; text-decoration: none; font-size: 1.4rem; font-weight: 600; }
+    .mobile-menu a:hover { color: var(--amber); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 2rem; color: white; cursor: pointer; background: none; border: none; }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      padding: 9rem 5% 5rem;
+      background: linear-gradient(160deg, var(--green-dark) 0%, var(--green-mid) 100%);
+      text-align: center;
+      border-bottom: 1px solid rgba(82,183,136,0.2);
+    }
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .page-hero h1 span { color: var(--amber); }
+    .page-hero p {
+      max-width: 600px;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    /* ─── SHARED ─── */
+    section { padding: 5rem 5%; }
+    .section-label {
+      display: block;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--green-accent); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      margin-bottom: 1rem;
+    }
+    .section-title span { color: var(--amber); }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 620px;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── MAIN DESTINATIONS GRID ─── */
+    .dest-section { background: var(--green-dark); }
+    .dest-section-inner { max-width: 1200px; margin: 0 auto; }
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 300px 300px;
+      gap: 1.2rem;
+    }
+    .dest-card {
+      border-radius: 20px; overflow: hidden;
+      position: relative; cursor: pointer;
+    }
+    .dest-card:first-child { grid-row: span 2; }
+    .dest-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .dest-card:hover img { transform: scale(1.07); }
+    .dest-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,43,30,0.85) 0%, rgba(13,43,30,0.1) 60%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.8rem;
+      transition: background 0.3s;
+    }
+    .dest-card:hover .dest-overlay { background: linear-gradient(to top, rgba(13,43,30,0.9) 0%, rgba(13,43,30,0.2) 60%); }
+    .dest-tag {
+      display: inline-block;
+      background: rgba(244,162,97,0.25); border: 1px solid rgba(244,162,97,0.5);
+      color: var(--amber); font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      padding: 0.3rem 0.8rem; border-radius: 50px; margin-bottom: 0.5rem;
+      width: fit-content;
+    }
+    .dest-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: white; }
+    .dest-desc { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 0.3rem; }
+
+    /* ─── MORE DESTINATIONS ─── */
+    .more-section { background: var(--green-mid); }
+    .more-inner { max-width: 1200px; margin: 0 auto; }
+    .more-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+    }
+    .more-card {
+      border-radius: 16px; overflow: hidden;
+      position: relative; height: 220px; cursor: pointer;
+    }
+    .more-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .more-card:hover img { transform: scale(1.07); }
+    .more-card .dest-overlay { background: linear-gradient(to top, rgba(13,43,30,0.88) 0%, rgba(13,43,30,0.05) 55%); }
+    .more-card:hover .dest-overlay { background: linear-gradient(to top, rgba(13,43,30,0.92) 0%, rgba(13,43,30,0.2) 60%); }
+    .more-card .dest-name { font-size: 1.1rem; }
+
+    /* ─── TIPS SECTION ─── */
+    .tips-section { background: var(--green-dark); }
+    .tips-inner { max-width: 1100px; margin: 0 auto; }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .tip-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .tip-card:hover { border-color: rgba(82,183,136,0.4); transform: translateY(-4px); }
+    .tip-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .tip-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;
+    }
+    .tip-card p { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+    /* ─── CTA ─── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+      border-top: 1px solid rgba(82,183,136,0.2);
+      padding: 5rem 5%;
+      text-align: center;
+    }
+    .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 1rem; }
+    .cta-banner h2 span { color: var(--amber); }
+    .cta-banner p { color: rgba(255,255,255,0.7); margin-bottom: 2.5rem; font-size: 1.05rem; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+      color: var(--white); text-decoration: none;
+      padding: 0.9rem 2.2rem; border-radius: 50px;
+      font-weight: 700; font-family: 'Montserrat', sans-serif; font-size: 0.95rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(244,162,97,0.4); }
+    .btn-secondary {
+      display: inline-block; background: transparent;
+      color: var(--white); text-decoration: none;
+      padding: 0.9rem 2.2rem; border-radius: 50px;
+      font-weight: 600; font-family: 'Montserrat', sans-serif; font-size: 0.95rem;
+      border: 2px solid rgba(255,255,255,0.35);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--green-dark); color: rgba(255,255,255,0.55); padding: 4rem 5% 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--amber); }
+    .footer-bottom { max-width: 1200px; margin: 2rem auto 0; display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .more-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .page-hero { padding: 7rem 5% 4rem; }
+      section { padding: 4rem 5%; }
+      .dest-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .dest-card { min-height: 200px; }
+      .dest-card:first-child { grid-row: span 1; }
+      .more-grid { grid-template-columns: 1fr 1fr; }
+      .tips-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .dest-grid { grid-template-columns: 1fr; }
+      .dest-card { min-height: 180px; }
+      .dest-overlay { padding: 1.2rem; }
+      .more-grid { grid-template-columns: 1fr; }
+      .tips-grid { grid-template-columns: 1fr; }
+      .tip-card { padding: 1.5rem 1.2rem; }
+      .cta-banner { padding: 3rem 5%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="trucks.html" onclick="closeMobile()">Trucks</a>
+  <a href="destinations.html" onclick="closeMobile()" style="color:var(--amber)">Destinations</a>
+  <a href="howitworks.html" onclick="closeMobile()">How It Works</a>
+  <a href="contact.html" onclick="closeMobile()">Contact</a>
+  <a href="https://wa.me/50684980851" target="_blank" style="color:var(--amber)">Book via WhatsApp</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><img src="https://img1.wsimg.com/isteam/ip/197458aa-0c8d-408c-9705-637913c517ca/Social%20no%20Shadow.png/:/rs=w:128,h:128,cg:true,m/cr=w:128,h:128/qt=q:95" alt="Logo" /></div>
+    <div class="nav-logo-text">Costa Rica Overlanding<span>4x4 Camper Rentals</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="trucks.html">Trucks</a></li>
+    <li><a href="destinations.html" class="active">Destinations</a></li>
+    <li><a href="howitworks.html">How It Works</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" onclick="openMobile()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <h1>Explore Costa <span>Rica</span></h1>
+  <p>From misty cloud forests to black-sand beaches — everywhere is within reach when you have the right rig.</p>
+</section>
+
+<!-- MAIN DESTINATIONS GRID -->
+<section class="dest-section">
+  <div class="dest-section-inner">
+    <span class="section-label">Top Destinations</span>
+    <h2 class="section-title">Costa Rica Is Your <span>Playground</span></h2>
+    <p class="section-subtitle">The roads less traveled are where the real adventure begins. Here are some of our favorite places to explore.</p>
+    <div class="dest-grid">
+      <div class="dest-card">
+        <img src="https://costaricaexperts.com/wp-content/uploads/2025/02/Osa-Peninsula-Home-to-Corcovado.jpeg" alt="Corcovado and Osa Peninsula" />
+        <div class="dest-overlay">
+          <span class="dest-tag">Rainforest</span>
+          <div class="dest-name">Corcovado &amp; Osa</div>
+          <div class="dest-desc">The most biologically intense place on Earth — jaguars, tapirs, and scarlet macaws deep in primary jungle.</div>
+        </div>
+      </div>
+      <div class="dest-card">
+        <img src="https://www.travelexcellence.com/wp-content/uploads/2020/10/Manuel_Antonio_Nat_Park_Cathedral_Point-1-1-scaled.jpg" alt="Manuel Antonio" />
+        <div class="dest-overlay">
+          <span class="dest-tag">Pacific Coast</span>
+          <div class="dest-name">Manuel Antonio</div>
+          <div class="dest-desc">Pristine beaches meets lush jungle with playful monkeys and stunning ocean views.</div>
+        </div>
+      </div>
+      <div class="dest-card">
+        <img src="https://www.arenalobservatorylodge.com/wp-content/uploads/2023/01/Volcan-Arenal-4.jpg" alt="Arenal Volcano" />
+        <div class="dest-overlay">
+          <span class="dest-tag">Volcano</span>
+          <div class="dest-name">Arenal Volcano</div>
+          <div class="dest-desc">Hot springs at the foot of a giant — park the truck and soak under the stars.</div>
+        </div>
+      </div>
+      <div class="dest-card">
+        <img src="https://www.costaricarios.com/wp-content/uploads/2019/08/Depositphotos_187303892_l-2015.jpg" alt="Waterfalls" />
+        <div class="dest-overlay">
+          <span class="dest-tag">Hidden Gems</span>
+          <div class="dest-name">Waterfalls</div>
+          <div class="dest-desc">Off-road trails lead to stunning cascades that most tourists never find.</div>
+        </div>
+      </div>
+      <div class="dest-card">
+        <img src="https://d1cq5bmaro4ubb.cloudfront.net/wp-content/uploads/2025/02/Santa-Teresa-Costa-Rica-1-scaled.jpeg" alt="Santa Teresa" />
+        <div class="dest-overlay">
+          <span class="dest-tag">Surf</span>
+          <div class="dest-name">Santa Teresa</div>
+          <div class="dest-desc">World-class waves, laid-back vibes, and sunsets worth driving hours to see.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MORE DESTINATIONS -->
+<section class="more-section">
+  <div class="more-inner">
+    <span class="section-label">Also Worth Exploring</span>
+    <h2 class="section-title">More Places to <span>Discover</span></h2>
+    <div class="more-grid">
+      <div class="more-card">
+        <img src="https://i.natgeofe.com/n/c350162d-d355-4d39-ae20-5439ff12e439/Monteverde-1.jpg" alt="Monteverde" />
+        <div class="dest-overlay">
+          <span class="dest-tag">Cloud Forest</span>
+          <div class="dest-name">Monteverde</div>
+          <div class="dest-desc">Zip-lines, hanging bridges, and misty forest canopy.</div>
+        </div>
+      </div>
+      <div class="more-card">
+        <img src="https://www.twoweeksincostarica.com/wp-content/uploads/2024/02/Playa-Punta-Uva.jpg" alt="Puerto Viejo de Talamanca" />
+        <div class="dest-overlay">
+          <span class="dest-tag">Caribbean</span>
+          <div class="dest-name">Puerto Viejo</div>
+          <div class="dest-desc">Reggae vibes, turquoise Caribbean water, and some of Costa Rica's most beautiful beaches.</div>
+        </div>
+      </div>
+      <div class="more-card">
+        <img src="https://costarica.org/wp-content/uploads/2014/12/Nicoya-View.jpg" alt="Nicoya Peninsula" />
+        <div class="dest-overlay">
+          <span class="dest-tag">Peninsula</span>
+          <div class="dest-name">Nicoya Peninsula</div>
+          <div class="dest-desc">Quiet beach towns, surf breaks, and a laid-back Blue Zone lifestyle.</div>
+        </div>
+      </div>
+      <div class="more-card">
+        <img src="https://www.creescapes.com/wp-content/uploads/rincon-de-la-vieja-national-park-waterfall.png" alt="Rincon de la Vieja" />
+        <div class="dest-overlay">
+          <span class="dest-tag">North Pacific</span>
+          <div class="dest-name">Rincón de la Vieja</div>
+          <div class="dest-desc">Volcanic mud pools, hot springs, and wild dry forest trails.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAVEL TIPS -->
+<section class="tips-section">
+  <div class="tips-inner">
+    <span class="section-label">Before You Go</span>
+    <h2 class="section-title">Overland <span>Travel Tips</span></h2>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <span class="tip-icon">🗓️</span>
+        <h3>Best Time to Visit</h3>
+        <p>December to April is dry season — ideal for beach roads and river crossings. May to November brings lush green landscapes and fewer crowds, but some roads get challenging.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🛣️</span>
+        <h3>Road Conditions</h3>
+        <p>Many of the best spots require dirt roads, river crossings, and rocky tracks. Our 4x4 trucks are built for it — but leave early and check local conditions before heading into remote areas.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🏕️</span>
+        <h3>Where to Sleep</h3>
+        <p>With our campers you are not only tied to paid camp grounds. Wild camping along all of Costa Rica's beaches is legal and enjoyed by both locals and travelers, with many national parks allowing camping.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">💧</span>
+        <h3>Water & Supplies</h3>
+        <p>Costa Rica has excellent tap water in most areas, but carry extra when heading into remote zones. Stock up on groceries in larger towns — small villages have limited supplies.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">📡</span>
+        <h3>Connectivity</h3>
+        <p>Cell coverage is surprisingly good on main routes. In deep jungle or coastal extremes, expect dead zones. Download offline maps before leaving and let someone know your itinerary.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🦎</span>
+        <h3>Wildlife Encounters</h3>
+        <p>Costa Rica has 5% of the world's biodiversity. Drive slowly on jungle roads at dawn and dusk. Keep food sealed in the truck and never feed wildlife — no matter how cute.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <h2>Ready to Explore Costa <span>Rica?</span></h2>
+  <p>Pick your truck and start planning your overland adventure.</p>
+  <div class="cta-buttons">
+    <a href="contact.html" class="btn-primary">Book Now</a>
+    <a href="trucks.html" class="btn-secondary">View Our Fleet</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:40px;height:40px;border-radius:10px;overflow:hidden;"><img src="https://img1.wsimg.com/isteam/ip/197458aa-0c8d-408c-9705-637913c517ca/Social%20no%20Shadow.png/:/rs=w:128,h:128,cg:true,m/cr=w:128,h:128/qt=q:95" alt="Logo" style="width:100%;height:100%;object-fit:contain;" /></div>
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;color:white;font-size:1rem;line-height:1.1;">
+          Costa Rica Overlanding<br>
+          <span style="font-size:0.65rem;color:var(--amber);letter-spacing:2px;font-weight:600;">4X4 CAMPER RENTALS</span>
+        </div>
+      </div>
+      <p>Your home on wheels for exploring the most beautiful country on Earth — on your terms, at your pace.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="trucks.html">The Trucks</a></li>
+        <li><a href="howitworks.html">How It Works</a></li>
+        <li><a href="destinations.html">Destinations</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+50684980851">(506) 8498-0851</a></li>
+        <li><a href="mailto:costaricaoverlanding@gmail.com">Email Us</a></li>
+        <li><a href="https://wa.me/50684980851">WhatsApp</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Follow</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/costaricaoverlanding" target="_blank">Instagram</a></li>
+        <li><a href="https://www.facebook.com/102731607798887" target="_blank">Facebook</a></li>
+        <li><a href="https://www.youtube.com/@costaricaoverlanding" target="_blank">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Costa Rica Overlanding. All rights reserved.</span>
+    <span>Calle Hermosa Garabito, Puntarenas, Costa Rica</span>
+  </div>
+</footer>
+
+<script>
+  function openMobile() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+</script>
+
+</body>
+</html>
